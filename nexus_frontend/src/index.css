@@ -1,0 +1,227 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card-img-top {
+  width: auto;
+  height: auto;
+}
+
+body {
+
+  background-image: url('images/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.form-holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.form-holder .form-content {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.form-content .form-items {
+  border: 3px solid #fff;
+  padding: 40px;
+  display: inline-block;
+  width: 100%;
+  min-width: 540px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.form-content h3 {
+  color: #fff;
+  text-align: left;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-content h3.form-title {
+  margin-bottom: 30px;
+}
+
+.form-content p {
+  color: #e8e0e0;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 20px;
+  margin-bottom: 30px;
+}
+
+
+.form-content label,
+.was-validated .form-check-input:invalid~.form-check-label,
+.was-validated .form-check-input:valid~.form-check-label {
+  color: #060606;
+}
+
+.form-content input[type=text],
+.form-content input[type=password],
+.form-content input[type=email],
+.form-content select {
+  width: 100%;
+  padding: 9px 20px;
+  text-align: left;
+  border: 0;
+  outline: 0;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  color: #8D8D8D;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+
+.btn-primary {
+  background-color: #6C757D;
+  outline: none;
+  border: 0px;
+  box-shadow: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #dfdfdf;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none;
+}
+
+.form-content textarea {
+  position: static !important;
+  width: 100%;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-align: left;
+  background-color: #fff;
+  border: 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: #8D8D8D;
+  outline: none;
+  resize: none;
+  height: 120px;
+  -webkit-transition: none;
+  transition: none;
+  margin-bottom: 14px;
+}
+
+.form-content textarea:hover,
+.form-content textarea:focus {
+  border: 0;
+  background-color: #ebeff8;
+  color: #8D8D8D;
+}
+
+.mv-up {
+  margin-top: -9px !important;
+  margin-bottom: 8px !important;
+}
+
+a {
+  color: #01080e;
+  text-decoration: none;
+}
+
+a:hover {
+  color:#00A0C6; 
+  text-decoration:none; 
+  cursor:pointer;  
+}
+.Home-container{
+  min-height: 100vh;
+}
+.sidebar {
+  background-color: #f7f3f375; /* Dark background for contrast */
+  color: hsla(0, 11%, 98%, 0.944); /* White text for readability */
+  position: fixed; /* Fixed position for consistent placement */
+  left: 0;
+  z-index: 100; /* Ensure sidebar appears above other content */
+  width: 250px; /* Adjust width as needed */
+  transition: width 0.3s ease-in-out; /* Smooth width transitions */
+  padding: 15px; /* Add padding for content spacing */
+  overflow-y: auto; /* Enable scrolling for longer sidebar content */
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1rem;
+}
+
+.sidebar-header img {
+  height: 35px; /* Adjust logo size as needed */
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Navigation Menu Styles */
+.nav-link {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  padding: .75rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s ease-in-out;
+  align-items: center; /* Center text vertically */
+  justify-content: center;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+}
+
+.nav-link .fas {
+  margin-right: 10px; 
+  /* Space between icon and text */
+  
+}
+
+/* Responsive Behavior (Collapse on smaller screens) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+  }
+}
+
