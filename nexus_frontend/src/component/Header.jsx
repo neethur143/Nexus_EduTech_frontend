@@ -26,6 +26,7 @@ function Header() {
           <button type="button" className="btn btn-success me-2"><Link to='signup'>Sign Up</Link></button>
         </div>
       </div>
+      
     </nav>
     <Outlet/>
     </div>

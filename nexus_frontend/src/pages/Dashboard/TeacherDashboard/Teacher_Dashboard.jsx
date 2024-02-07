@@ -9,8 +9,7 @@ function TeacherDashboard() {
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <Navbar />
                     <div className="container">
-                        <h1>Teacher Dashboard</h1>
-                       
+                        <h1>Teacher Dashboard</h1>                      
                     </div>
                 </main>
             </div>

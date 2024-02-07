@@ -7,7 +7,9 @@ import TeacherDashboard from './pages/Dashboard/TeacherDashboard/Teacher_Dashboa
 import Dashboard from './pages/Dashboard/AdminDashboard/Dashboard';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import StudentDetails from './pages/Dashboard/AdminDashboard/StudentTable';
+import StudentDetails from './pages/Dashboard/AdminDashboard/ViewStudent';
+import AddStudent from './pages/Dashboard/AdminDashboard/AddStudent';
+import AddTeacher from './pages/Dashboard/AdminDashboard/AddTeacher';
 
 function App() {
   return (
@@ -23,8 +25,11 @@ function App() {
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/admin/dashboard" element={<Dashboard />} >
           {/* admin home */}
-          <Route index element={<StudentDetails />} />
+         
+          {/* <Route index element={<AddTeacher />} />
           <Route path="studenttbl" element={<StudentDetails />} />
+          <Route path="addstudent" element={<AddStudent/>}/>
+          <Route path="addteacher" element={<AddTeacher/>}/> */}
         </Route>
 
 
