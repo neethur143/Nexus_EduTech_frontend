@@ -23,7 +23,7 @@ function Header() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
           </ul>
           <button type="button" className="btn btn-success me-2"><Link to='signin'>Sign In</Link></button>
-          
+          <button type="button" className="btn btn-success me-2"><Link to='signup'>Sign Up</Link></button>
         </div>
       </div>
     </nav>

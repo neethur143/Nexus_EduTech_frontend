@@ -10,17 +10,17 @@ function SignUp() {
                     <div className="form-holder">
                         <div className="form-content">
                             <div className="form-items">
-                                <h3 className='text-center'>Sign Up</h3>
-                                <p>Fill in the data below.</p>
+                                <h3 className='text-center'>Sign Up</h3>                            
                                 <form className="container bg-light col-md-16 p-4 rounded shadow-sm">
                                     <fieldset style={{ marginTop: '20px', marginBottom: '20px' }}>
                                         {/* <legend>Sign Up</legend> */}
                                         <div className="row mb-3">
                                             {/* Left side fields */}
                                             <div className="col-md-6">
-                                                <label htmlFor="username" className="form-label">Username:</label>
-                                                <input type="text" className="form-control" id="username" name="username" required autofocus /><br/>
 
+                                            <label htmlFor="firstName" className="form-label">First Name:</label>
+                                                <input type="text" className="form-control" id="firstName" name="firstName" required /><br/>
+                                           
                                                 <label htmlFor="email" className="form-label">Email Address:</label>
                                                 <input type="email" className="form-control" id="email" name="email" required /><br/>
 
@@ -34,11 +34,13 @@ function SignUp() {
 
                                             {/* Right side fields */}
                                             <div className="col-md-6">
-                                                <label htmlFor="firstName" className="form-label">First Name:</label>
-                                                <input type="text" className="form-control" id="firstName" name="firstName" required /><br/>
-
+                                          
+                                              
                                                 <label htmlFor="lastName" className="form-label">Last Name:</label>
                                                 <input type="text" className="form-control" id="lastName" name="lastName" required /><br/>
+
+                                                <label htmlFor="username" className="form-label">Username:</label>
+                                                <input type="text" className="form-control" id="username" name="username" required autofocus /><br/>
 
                      
                                                 <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
@@ -53,7 +55,7 @@ function SignUp() {
                                             <label htmlFor="role" className="form-label">Role:</label>
                                             <select className="form-select" id="role" name="role" required>
                                             <option  placeholder="Select your role">-- Please select --</option>
-                                                <option value="Admin">Admin</option>
+                                               
                                                 <option value="Student">Student</option>
                                                 <option value="Teacher">Teacher</option>
                                             </select>

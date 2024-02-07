@@ -44,7 +44,7 @@ body {
 }
 
 .form-content .form-items {
-  border: 3px solid #fff;
+  border: 3px solid #ecbde7;
   padding: 40px;
   display: inline-block;
   width: 100%;
@@ -58,7 +58,7 @@ body {
 }
 
 .form-content h3 {
-  color: #fff;
+  color: #c706a4;
   text-align: left;
   font-size: 28px;
   font-weight: 600;
@@ -82,7 +82,7 @@ body {
 .form-content label,
 .was-validated .form-check-input:invalid~.form-check-label,
 .was-validated .form-check-input:valid~.form-check-label {
-  color: #060606;
+  color: #8c0154;
 }
 
 .form-content input[type=text],
@@ -98,7 +98,7 @@ body {
   background-color: #fff;
   font-size: 15px;
   font-weight: 300;
-  color: #8D8D8D;
+  color: #000000;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   margin-top: 16px;
@@ -106,7 +106,7 @@ body {
 
 
 .btn-primary {
-  background-color: #6C757D;
+  background-color: #4e0543;
   outline: none;
   border: 0px;
   box-shadow: none;
@@ -144,7 +144,7 @@ body {
 .form-content textarea:focus {
   border: 0;
   background-color: #ebeff8;
-  color: #8D8D8D;
+  color: #0e0d0d;
 }
 
 .mv-up {
@@ -206,7 +206,7 @@ a:hover {
 }
 
 .nav-link .fas {
-  margin-right: 10px; 
+  margin-right: 20px; 
   /* Space between icon and text */
   
 }

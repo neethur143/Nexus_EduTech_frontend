@@ -30,9 +30,9 @@ function Navbar() {
                 </a>
               </li>
               <li className="nav-item">
-                <a to="/users" className="nav-link text-white">
+                {/* <a to="/users" className="nav-link text-white">
                   Users
-                </a>
+                </a> */}
               </li>
             </ul>
             <form className="d-flex ms-auto text-white">

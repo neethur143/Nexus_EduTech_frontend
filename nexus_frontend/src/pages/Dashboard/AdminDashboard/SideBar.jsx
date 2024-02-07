@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom'
 const AdminSideBar = () => {
     return (
         <div className="container-fluid">
@@ -20,9 +20,10 @@ const AdminSideBar = () => {
                                     Users
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                    <li><a className="dropdown-item text-center" href="#">Admin</a></li>
+
                                     <li><a className="dropdown-item text-center" href="#">Student</a></li>
-                                    <li><a className="dropdown-item text-center" href="#">Teacher</a></li>
+                                    {/* <li><a className="dropdown-item text-center" href="#">Teacher</a> </li> */}
+                                    <li><a className="dropdown-item text-center" ></a><Link to="/studenttbl">Teacher</Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item">
