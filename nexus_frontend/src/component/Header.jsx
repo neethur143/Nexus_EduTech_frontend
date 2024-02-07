@@ -16,7 +16,7 @@ function Header() {
               <a className="nav-link active" aria-current="page" ><Link to='/'>Home</Link></a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" ><Link to='aboutus'>About Us</Link></a>
+              <a className="nav-link" ><a to='/'>About Us</a></a>
             </li>
           </ul>
         <div className="collapse navbar-collapse me-auto" id="navbarTogglerDemo03">

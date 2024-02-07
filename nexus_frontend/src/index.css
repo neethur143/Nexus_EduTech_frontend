@@ -178,13 +178,6 @@ a:hover {
   min-height: 100vh;
 }
 
-/* Header Styles */
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 1rem;
-}
 
 .sidebar-header img {
   height: 35px; /* Adjust logo size as needed */
@@ -216,6 +209,13 @@ a:hover {
   margin-right: 10px; 
   /* Space between icon and text */
   
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Adjust according to your layout */
+  left: 0; /* Align to the left of the dropdown toggle */
+  right: 0; /* Or align to the right, if desired */
+  min-height: 0; /* Remove Bootstrap's default min-height */
 }
 
 /* Responsive Behavior (Collapse on smaller screens) */
