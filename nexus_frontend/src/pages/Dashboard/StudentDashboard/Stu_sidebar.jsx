@@ -32,7 +32,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/student/viewStudentProfile"
+                      to="student/viewStudentProfile"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
@@ -51,7 +51,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/student/viewRemarkList"
+                      to="student/viewExam"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
@@ -70,7 +70,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/student/viewNoticeList"
+                      to="student/viewResult"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
@@ -89,7 +89,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/student/viewAttendanceList"
+                      to="student/viewAttendanceList"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
@@ -129,7 +129,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/student/viewTimeTableList"
+                      to="student/viewTimeTableList"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
