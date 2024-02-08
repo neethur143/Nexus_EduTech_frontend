@@ -12,16 +12,18 @@ import ViewSubject from './ViewSubject';
 import AddExam from './AddExam';
 import ViewExam from './ViewExam';
 import Communication from './Announcement';
+import ScheduleClass from './ScheduleClass';
+import ViewScheduleClass from './ViewClassSchedule';
 
 function Dashboard() {
     return (
         <div className="container-fluid">
             <div className="row">
-              {/* <AdminSideBar/> */}
+              <AdminSideBar/>
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-0">
                     {/* <Navbar /> */}
                     {/* <AddTeacher/> */}
-                    {/* <AddStudent/> */}
+                    <AddStudent/>
                     {/* <ViewTeacher/> */}
                     {/* <StudentDetails/> */}
                     {/* <ViewClass/> */}
@@ -29,7 +31,9 @@ function Dashboard() {
                     {/* <ViewSubject/> */}
                     {/* <AddExam/> */}
                     {/* <ViewExam/> */}
-                    <Communication/>
+                    {/* <Communication/> */}
+                    {/* {<ScheduleClass/>} */}
+                    {/* <ViewScheduleClass/> */}
                     <div className="container">
                       <Outlet/>                      
                     </div>

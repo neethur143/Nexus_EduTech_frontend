@@ -2,18 +2,35 @@ import React, { useState } from 'react';
 
 const AddStudent = () => {
   const [studentDetails, setStudentDetails] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    medium: '',
-    standard: '',
-    division: ''
+    studentId: '',
+    fullName: '',
+    registerNo: '',
+    gender: '',
+    dateOfBirth: '',
+    address: '',
+    emailAddress: '',
+    classId: ''
   });
+
+  const dummyTable = [
+    { classId: '101', standard: '1', section: 'A' },
+    { classId: '102', standard: '1', section: 'B' },
+    { classId: '103', standard: '1', section: 'C' },
+    { classId: '104', standard: '1', section: 'D' },
+    { classId: '201', standard: '2', section: 'A' },
+    // Add more dummy data as needed
+  ];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setStudentDetails({ ...studentDetails, [name]: value });
+    if (name === 'standard' || name === 'section') {
+      const selectedClass = dummyTable.find(item => item.standard === studentDetails.standard && item.section === studentDetails.section);
+      if (selectedClass) {
+        setStudentDetails({ ...studentDetails, [name]: value, classId: selectedClass.classId });
+      }
+    } else {
+      setStudentDetails({ ...studentDetails, [name]: value });
+    }
   };
 
   const handleSubmit = (event) => {
@@ -22,13 +39,14 @@ const AddStudent = () => {
     console.log(studentDetails);
     // Reset form fields after submission
     setStudentDetails({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      medium: '',
-      standard: '',
-      division: ''
+      studentId: '',
+      fullName: '',
+      registerNo: '',
+      gender: '',
+      dateOfBirth: '',
+      address: '',
+      emailAddress: '',
+      classId: ''
     });
   };
 
@@ -40,72 +58,96 @@ const AddStudent = () => {
             <div className="card-header">
               <h4 className="card-title">Add Student</h4>
             </div>
-            <div className="card-body">
+            <div className="card-body">             
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="firstName" className="form-label">First Name:</label>
+                  <label htmlFor="studentId" className="form-label">Student ID:</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="firstName"
-                    name="firstName"
-                    value={studentDetails.firstName}
+                    id="studentId"
+                    name="studentId"
+                    value={studentDetails.studentId}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="lastName" className="form-label">Last Name:</label>
+                  <label htmlFor="fullName" className="form-label">Full Name:</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="lastName"
-                    name="lastName"
-                    value={studentDetails.lastName}
+                    id="fullName"
+                    name="fullName"
+                    value={studentDetails.fullName}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email:</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    name="email"
-                    value={studentDetails.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="phoneNumber" className="form-label">Phone Number:</label>
+                  <label htmlFor="registerNo" className="form-label">Register No:</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={studentDetails.phoneNumber}
+                    id="registerNo"
+                    name="registerNo"
+                    value={studentDetails.registerNo}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="medium" className="form-label">Medium:</label>
+                  <label htmlFor="gender" className="form-label">Gender:</label>
                   <select
                     className="form-select"
-                    id="medium"
-                    name="medium"
-                    value={studentDetails.medium}
+                    id="gender"
+                    name="gender"
+                    value={studentDetails.gender}
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Select Medium</option>
-                    <option value="Gujarati">Gujarati</option>
-                    <option value="Hindi">Hindi</option>
-                    <option value="English">English</option>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
+                <div className="mb-3">
+                  <label htmlFor="dateOfBirth" className="form-label">Date of Birth:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    value={studentDetails.dateOfBirth}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="address" className="form-label">Address:</label>
+                  <textarea
+                    className="form-control"
+                    id="address"
+                    name="address"
+                    value={studentDetails.address}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="emailAddress" className="form-label">Email Address:</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="emailAddress"
+                    name="emailAddress"
+                    value={studentDetails.emailAddress}
+                    onChange={handleChange}
+                    required
+                  />
+                  </div>
+
                 <div className="mb-3">
                   <label htmlFor="standard" className="form-label">Standard:</label>
                   <select
@@ -117,22 +159,22 @@ const AddStudent = () => {
                     required
                   >
                     <option value="">Select Standard</option>
-                    {Array.from({ length: 12 }, (_, i) => (
+                    {Array.from({ length: 10 }, (_, i) => (
                       <option key={i + 1} value={i + 1}>{i + 1}</option>
                     ))}
                   </select>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="division" className="form-label">Division:</label>
+                  <label htmlFor="section" className="form-label">Section:</label>
                   <select
                     className="form-select"
-                    id="division"
-                    name="division"
-                    value={studentDetails.division}
+                    id="section"
+                    name="section"
+                    value={studentDetails.section}
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Select Division</option>
+                    <option value="">Select Section</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
@@ -142,7 +184,7 @@ const AddStudent = () => {
                 <div className="text-end">
                   <button type="submit" className="btn btn-success me-2">Submit</button>
                   <button type="reset" className="btn btn-danger">Reset</button>
-                </div>
+                </div>            
               </form>
             </div>
           </div>

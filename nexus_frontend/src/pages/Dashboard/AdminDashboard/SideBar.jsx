@@ -140,35 +140,18 @@ const AdminSideBar = () => {
             </li>           
             
                    
-            <li className="navigation-header">
-              <span>TIMETABLE</span>
-              <i className="icon-ellipsis"></i>
-            </li>
+        
             <li className="nav-item">
               <a href="#">
                 <i className="icon-stack-2"></i>
-                <span className="menu-title">Time-Table Setting</span>
+                <span className="menu-title">Schedule Class</span>
               </a>
               <ul className="menu-content">
                 <li>
-                  <Link to="/admin/addTimeTableSetting" className="menu-item">Add Time-Table Setting</Link>
+                  <Link to="/admin/addTimeTableSetting" className="menu-item">Schedule Class</Link>
                 </li>
                 <li>
-                  <Link to="/admin/viewTimeTableSetting" className="menu-item">View Time-Table Setting</Link>
-                </li>
-              </ul>
-            </li>
-            <li className="nav-item">
-              <a href="#">
-                <i className="icon-stack-2"></i>
-                <span className="menu-title">Time-Table</span>
-              </a>
-              <ul className="menu-content">
-                <li>
-                  <Link to="/admin/addTimeTable" className="menu-item">Add Time-Table</Link>
-                </li>
-                <li>
-                  <Link to="/admin/viewTimeTable" className="menu-item">View Time-Table</Link>
+                  <Link to="/admin/viewTimeTableSetting" className="menu-item">View Schedule Class</Link>
                 </li>
               </ul>
             </li>
@@ -203,19 +186,15 @@ const AdminSideBar = () => {
                   <Link to="/admin/viewQuePaper" className="menu-item">View Question Paper</Link>
                 </li>
               </ul>
-            </li> */}                 
-            <li className="navigation-header">
-              <span>ADMIN</span>
-              <i className="icon-ellipsis"></i>
-            </li>
+            </li> */}                            
             <li className="nav-item">
               <a href="#">
                 <i className="icon-stack-2"></i>
-                <span className="menu-title">Feedback</span>
+                <span className="menu-title">Communication</span>
               </a>
               <ul className="menu-content">
                 <li>
-                  <Link to="/admin/viewFeedback" className="menu-item">View Feedback</Link>
+                  <Link to="/admin/viewFeedback" className="menu-item">Add Message</Link>
                 </li>
               </ul>
             </li>           

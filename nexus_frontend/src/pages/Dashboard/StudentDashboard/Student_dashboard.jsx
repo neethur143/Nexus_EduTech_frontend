@@ -6,29 +6,38 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../Navbar';
 // ... other content components
 import Footer from '../../../component/Footer';
+import ViewStudentDetail from './ViewStudentProfile';
+import ExamTable from './ViewExam';
+import ViewResult from './ViewResult';
+import ViewTimeTable from './ViewTimetable';
 
 function StudentDashboard() {
-  const location = useLocation();
+  // const location = useLocation();
 
-  const renderContent = () => {
-    switch (location.pathname) {
-      // case '/student/dashboard':
-      //   return <DashboardContent />;
-      // case '/student/profile':
-      //   return <ProfileContent />;
-      // // ... other cases
-      // default:
-      //   return <NotFound />;
-    }
-  };
+  // const renderContent = () => {
+  //   switch (location.pathname) {
+  //     // case '/student/dashboard':
+  //     //   return <DashboardContent />;
+  //     // case '/student/profile':
+  //     //   return <ProfileContent />;
+  //     // // ... other cases
+  //     // default:
+  //     //   return <NotFound />;
+  //   }
+  // };
 
   return (
     <div className="container-fluid">
         <Navbar/>
+        {/* <ViewStudentDetail/> */}
+        {/* <ExamTable/> */}
+        {/* <ViewResult/> */}
+        <ViewTimeTable/>
       <div className="row">
         <StudentSidebar />
         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          {renderContent()}
+          {/* {renderContent()} */}
+      
         </main>
       </div>   
     </div>
