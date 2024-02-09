@@ -1,14 +1,16 @@
-// Communication.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Communication = () => {
   const [announcementContent, setAnnouncementContent] = useState('');
-  const [recipientType, setRecipientType] = useState('all'); // Default to 'all' recipients
+  const [recipientType, setRecipientType] = useState(0); // Default to 'all' recipients
   const [recipients, setRecipients] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
   const [studentId, setStudentId] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [customRecipientEmail, setCustomRecipientEmail] = useState('');
+  const [showPopover, setShowPopover] = useState(false);
+  const [popoverMessage, setPopoverMessage] = useState('');
 
   useEffect(() => {
     // Fetch all students when component mounts
@@ -17,7 +19,7 @@ const Communication = () => {
 
   const fetchAllStudents = async () => {
     try {
-      const response = await axios.get('/api/students');
+      const response = await axios.get('/api/Student/GetAll');
       setAllStudents(response.data);
     } catch (error) {
       console.error('Error fetching students:', error);
@@ -25,7 +27,7 @@ const Communication = () => {
   };
 
   const handleRecipientTypeChange = (e) => {
-    setRecipientType(e.target.value);
+    setRecipientType(parseInt(e.target.value));
   };
 
   const handleAnnouncementContentChange = (e) => {
@@ -39,11 +41,15 @@ const Communication = () => {
 
   const handleFetchStudentDetails = async () => {
     try {
-      const response = await axios.get(`/api/students/${studentId}`);
+      const response = await axios.get(`/api/Student/GetAll/${studentId}`);
       setSelectedStudent(response.data);
     } catch (error) {
       console.error('Error fetching student details:', error);
     }
+  };
+
+  const handleCustomRecipientEmailChange = (e) => {
+    setCustomRecipientEmail(e.target.value);
   };
 
   const handleRecipientChange = (e) => {
@@ -54,15 +60,37 @@ const Communication = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let selectedRecipients = [];
+
+    if (recipientType === 0) {
+      // Include all recipients
+      selectedRecipients = recipients;
+    } else if (recipientType === 1) {
+      // Fetch teachers and set them as recipients
+      const response = await axios.get('/api/Teacher/GetAll');
+      selectedRecipients = response.data.map(teacher => teacher.email);
+    } else if (recipientType === 2) {
+      // Include custom recipient email entered by the user
+      selectedRecipients = [customRecipientEmail];
+    }
+
     try {
-      await axios.post('/api/announcements/send', {
+      await axios.post('http://localhost:5011/api/Announcement/send', {
         announcementContent,
-        recipients: recipientType === 'all' ? [] : recipients,
+        recipientType,
+        studentEmail: recipientType === 2 ? customRecipientEmail : null,
+        recipients: selectedRecipients,
+    
       });
 
-      console.log('Announcement sent successfully');
+      setPopoverMessage('Announcement sent successfully');
+      setShowPopover(true);
+      setTimeout(() => {
+        setShowPopover(false);
+      }, 3000); // Hide popover after 3 seconds
     } catch (error) {
-      console.error('Error sending announcement:', error);
+      setPopoverMessage('Error sending announcement');
+      setShowPopover(true);
     }
   };
 
@@ -88,42 +116,33 @@ const Communication = () => {
             value={recipientType}
             onChange={handleRecipientTypeChange}
           >
-            <option value="all">All Students and Teachers</option>
-            <option value="teachers">All Teachers Only</option>
-            <option value="student">Select Student</option>
+            <option value={0}>All Students and Teachers</option>
+            <option value={1}>All Teachers Only</option>
+            <option value={2}>Select Student</option>
           </select>
         </div>
-        {recipientType === 'student' && (
+        {recipientType === 2 && (
           <div className="mb-3">
-            <label htmlFor="studentId" className="form-label">Enter Student ID:</label>
-            <div className="input-group">
-              <input
-                type="text"
-                id="studentId"
-                className="form-control"
-                value={studentId}
-                onChange={handleStudentIdChange}
-              />
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleFetchStudentDetails}
-              >
-                Fetch Details
-              </button>
-            </div>
-            {selectedStudent && (
-              <div className="mt-3">
-                <p><strong>Student ID:</strong> {selectedStudent.id}</p>
-                <p><strong>Name:</strong> {selectedStudent.name}</p>
-                <p><strong>Email:</strong> {selectedStudent.email}</p>
-                {/* Add more details as needed */}
-              </div>
-            )}
+            <label htmlFor="customRecipientEmail" className="form-label">Enter Recipient Email:</label>
+            <input
+              type="email"
+              id="customRecipientEmail"
+              className="form-control"
+              value={customRecipientEmail}
+              onChange={handleCustomRecipientEmailChange}
+              required
+            />
           </div>
         )}
         <button type="submit" className="btn btn-primary">Send Announcement</button>
       </form>
+      {showPopover && (
+        <div className="popover">
+          <div className="popover-content">
+            {popoverMessage}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
