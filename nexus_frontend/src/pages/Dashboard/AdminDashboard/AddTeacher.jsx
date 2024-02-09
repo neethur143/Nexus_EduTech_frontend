@@ -1,39 +1,44 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Ensure axios is installed
 
 const AddTeacher = () => {
-  const [teacherDetails, setTeacherDetails] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    qualification: '',
-    subjects: [],
-    standards: [],
-    divisions: []
-  });
+  // ... existing state and handlers ...
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    if (name === 'subjects') {
-      setTeacherDetails({ ...teacherDetails, subjects: value.split(',') });
-    } else {
-      setTeacherDetails({ ...teacherDetails, [name]: value });
-    }
-  };
-
-  const handleCheckboxChange = (event) => {
-    const { name, checked, value } = event.target;
-    if (checked) {
-      setTeacherDetails({ ...teacherDetails, [name]: [...teacherDetails[name], value] });
-    } else {
-      setTeacherDetails({ ...teacherDetails, [name]: teacherDetails[name].filter(item => item !== value) });
-    }
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform form submission logic here
-    console.log(teacherDetails);
+
+    // Validate form fields before submission
+    if (!teacherDetails.firstName || !teacherDetails.lastName || !teacherDetails.email || !teacherDetails.phoneNumber) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    // Prepare the payload for the API request
+    const payload = {
+      name: `${teacherDetails.firstName} ${teacherDetails.lastName}`,
+      gender: teacherDetails.gender,
+      dob: new Date().toISOString(), // Use current date as placeholder, replace with actual date
+      address: teacherDetails.address,
+      contactNumber: teacherDetails.phoneNumber,
+      email: teacherDetails.email,
+      classId:  101 // Replace with the actual classId based on selection
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5011/api/Teacher/AddTeacher', payload, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (response.status ===  200) {
+        alert('Teacher Added Successfully');
+      } else {
+        throw new Error('Error adding teacher');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An error occurred while adding the teacher');
+    }
+
     // Reset form fields after submission
     setTeacherDetails({
       firstName: '',

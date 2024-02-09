@@ -20,27 +20,29 @@ import StudentDetails from './ViewStudent';
 function AdminDashboard() {
   return (
     <div className="admin-dashboard">
-      <AdminSideBar/>
-      <div className="admin-main-content">
-    <Navbar/>
+      {/* <AdminSideBar/> */}
+      <section className='d-flex flex-column justify-content-center align-items-center'>
+      <div className='col-md-9'>
+      <div className=" admin-main-content ">
         <Routes>
-          <Route path="/admin/addStudent" element={<AddStudent/>} />
-          <Route path="/admin/viewStudent" element={<StudentDetails/>} />
-          <Route path="/admin/addTeacher" element={<AddTeacher/>} />
-          <Route path="/admin/viewTeacher" element={<ViewTeacher/>} />
-          <Route path="/admin/viewClass" element={<ViewClass/>}/>
-          <Route path="/admin/viewStandard" element={<ViewStandard/>}/>
-          <Route path="/admin/viewSubject" element={<ViewSubject/>}/>
-          {/* <Route path="/admin/viewAttendance" element={}/> */}
-          <Route path="/admin/Scheduleclass" element={<ScheduleClass/>}/>
-          <Route path="/admin/viewScheduleclass" element={<ViewScheduleClass/>}/>
-          <Route path="/admin/addExam" element={<AddExam/>}/>
-          <Route path="/admin/viewExam" element={<ViewExam/>}/>
-          <Route path="/admin/Communication" element={<Communication/>}/>
-       
+          <Route path="/addStudent" element={<AddStudent/>} />
+          <Route path="/viewStudent" element={<StudentDetails/>} />
+          <Route path="/addTeacher" element={<AddTeacher/>} />
+          <Route path="/viewTeacher" element={<ViewTeacher/>} />
+          <Route path="/viewClass" element={<ViewClass/>}/>
+          <Route path="/viewStandard" element={<ViewStandard/>}/>
+          <Route path="/viewSubject" element={<ViewSubject/>}/>
+          {/* <Route path="/viewAttendance" element={}/> */}
+          <Route path="/Scheduleclass" element={<ScheduleClass/>}/>
+          <Route path="/viewScheduleclass" element={<ViewScheduleClass/>}/>
+          <Route path="/addExam" element={<AddExam/>}/>
+          <Route path="/viewExam" element={<ViewExam/>}/>
+          <Route path="/Communication" element={<Communication/>}/>       
         </Routes>
       </div>
-    </div>
+      </div>
+      </section>
+     </div>
   );
 }
 

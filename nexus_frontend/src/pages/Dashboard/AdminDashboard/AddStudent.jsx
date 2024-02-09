@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const AddStudent = () => {
   const [studentDetails, setStudentDetails] = useState({
@@ -9,34 +10,62 @@ const AddStudent = () => {
     dateOfBirth: '',
     address: '',
     emailAddress: '',
+    standard: '',
+    section: '',
     classId: ''
   });
 
-  const dummyTable = [
-    { classId: '101', standard: '1', section: 'A' },
-    { classId: '102', standard: '1', section: 'B' },
-    { classId: '103', standard: '1', section: 'C' },
-    { classId: '104', standard: '1', section: 'D' },
-    { classId: '201', standard: '2', section: 'A' },
-    // Add more dummy data as needed
+  const dummyData = [
+    { standard: '1', section: 'A', classId: '101' },
+    { standard: '1', section: 'B', classId: '102' },
+    // ... other standards and sections
   ];
 
-  const handleChange = (event) => {
+  const handleDropdownChange = (event) => {
     const { name, value } = event.target;
+    let updatedStudentDetails = { ...studentDetails, [name]: value };
+
     if (name === 'standard' || name === 'section') {
-      const selectedClass = dummyTable.find(item => item.standard === studentDetails.standard && item.section === studentDetails.section);
+      const selectedClass = dummyData.find(
+        item => item.standard === updatedStudentDetails.standard && item.section === updatedStudentDetails.section
+      );
       if (selectedClass) {
-        setStudentDetails({ ...studentDetails, [name]: value, classId: selectedClass.classId });
+        updatedStudentDetails = { ...updatedStudentDetails, classId: selectedClass.classId };
       }
-    } else {
-      setStudentDetails({ ...studentDetails, [name]: value });
     }
+
+    setStudentDetails(updatedStudentDetails);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform form submission logic here
-    console.log(studentDetails);
+    // Convert the studentDetails object to match the expected payload structure
+    const payload = {
+      studentId: parseInt(studentDetails.studentId),
+      name: studentDetails.fullName,
+      registrationNumber: studentDetails.registerNo,
+      classId: parseInt(studentDetails.classId),
+      gender: studentDetails.gender,
+      dob: new Date(studentDetails.dateOfBirth).toISOString(),
+      address: studentDetails.address,
+      email: studentDetails.emailAddress
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5011/api/Student/AddStudent', payload, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (response.status ===   200) {
+        alert('Student Added Successfully');
+      } else {
+        throw new Error('Error adding student');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An error occurred while adding the student');
+    }
+
     // Reset form fields after submission
     setStudentDetails({
       studentId: '',
@@ -46,10 +75,11 @@ const AddStudent = () => {
       dateOfBirth: '',
       address: '',
       emailAddress: '',
+      standard: '',
+      section: '',
       classId: ''
     });
   };
-
   return (
     <div className="container">
       <div className="row">
@@ -68,7 +98,7 @@ const AddStudent = () => {
                     id="studentId"
                     name="studentId"
                     value={studentDetails.studentId}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                 </div>
@@ -80,7 +110,7 @@ const AddStudent = () => {
                     id="fullName"
                     name="fullName"
                     value={studentDetails.fullName}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                 </div>
@@ -92,7 +122,7 @@ const AddStudent = () => {
                     id="registerNo"
                     name="registerNo"
                     value={studentDetails.registerNo}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                 </div>
@@ -103,7 +133,7 @@ const AddStudent = () => {
                     id="gender"
                     name="gender"
                     value={studentDetails.gender}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   >
                     <option value="">Select Gender</option>
@@ -120,7 +150,7 @@ const AddStudent = () => {
                     id="dateOfBirth"
                     name="dateOfBirth"
                     value={studentDetails.dateOfBirth}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                 </div>
@@ -131,7 +161,7 @@ const AddStudent = () => {
                     id="address"
                     name="address"
                     value={studentDetails.address}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                 </div>
@@ -143,24 +173,24 @@ const AddStudent = () => {
                     id="emailAddress"
                     name="emailAddress"
                     value={studentDetails.emailAddress}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   />
                   </div>
 
-                <div className="mb-3">
+                  <div className="mb-3">
                   <label htmlFor="standard" className="form-label">Standard:</label>
                   <select
                     className="form-select"
                     id="standard"
                     name="standard"
                     value={studentDetails.standard}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   >
                     <option value="">Select Standard</option>
-                    {Array.from({ length: 10 }, (_, i) => (
-                      <option key={i + 1} value={i + 1}>{i + 1}</option>
+                    {Array.from({ length:  10 }, (_, i) => (
+                      <option key={i +  1} value={i +  1}>{i +  1}</option>
                     ))}
                   </select>
                 </div>
@@ -171,7 +201,7 @@ const AddStudent = () => {
                     id="section"
                     name="section"
                     value={studentDetails.section}
-                    onChange={handleChange}
+                    onChange={handleDropdownChange}
                     required
                   >
                     <option value="">Select Section</option>
@@ -184,7 +214,7 @@ const AddStudent = () => {
                 <div className="text-end">
                   <button type="submit" className="btn btn-success me-2">Submit</button>
                   <button type="reset" className="btn btn-danger">Reset</button>
-                </div>            
+                </div>          
               </form>
             </div>
           </div>
