@@ -215,8 +215,10 @@ const AdminSideBar = () => {
               Attendance
               </button>
               <ul className="dropdown-menu">
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-money-bill fa-fw me-3" /><span><Link to="viewAttendance" className="menu-item">View Attendance</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-money-bill fa-fw me-3" /><span><Link to="AddAttendanceTeacher" className="menu-item">Add Attendance Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-money-bill fa-fw me-3" /><span><Link to="viewAttendanceTeacher" className="menu-item">View Attendance Teacher</Link></span></a></li>
               </ul>
+             
               </div>
  
        

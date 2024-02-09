@@ -15,6 +15,8 @@ const AddStudent = () => {
     classId: ''
   });
 
+  const [errors, setErrors] = useState({});
+
   const dummyData = [
     { standard: '1', section: 'A', classId: '101' },
     { standard: '1', section: 'B', classId: '102' },
@@ -39,6 +41,45 @@ const AddStudent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    const newErrors = {};
+
+    // Basic form validation
+    if (!studentDetails.studentId) {
+      newErrors.studentId = 'Student ID is required';
+    }
+    if (!studentDetails.fullName) {
+      newErrors.fullName = 'Full Name is required';
+    }
+    if (!studentDetails.registerNo) {
+      newErrors.registerNo = 'Register No is required';
+    }
+    if (!studentDetails.gender) {
+      newErrors.gender = 'Gender is required';
+    }
+    if (!studentDetails.dateOfBirth) {
+      newErrors.dateOfBirth = 'Date of Birth is required';
+    }
+    if (!studentDetails.address) {
+      newErrors.address = 'Address is required';
+    }
+    if (!studentDetails.emailAddress) {
+      newErrors.emailAddress = 'Email Address is required';
+    } else if (!isValidEmail(studentDetails.emailAddress)) {
+      newErrors.emailAddress = 'Please enter a valid email address';
+    }
+    if (!studentDetails.standard) {
+      newErrors.standard = 'Standard is required';
+    }
+    if (!studentDetails.section) {
+      newErrors.section = 'Section is required';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     // Convert the studentDetails object to match the expected payload structure
     const payload = {
       studentId: parseInt(studentDetails.studentId),
@@ -56,7 +97,7 @@ const AddStudent = () => {
         headers: { 'Content-Type': 'application/json' }
       });
 
-      if (response.status ===   200) {
+      if (response.status === 200) {
         alert('Student Added Successfully');
       } else {
         throw new Error('Error adding student');
@@ -66,7 +107,7 @@ const AddStudent = () => {
       alert('An error occurred while adding the student');
     }
 
-    // Reset form fields after submission
+    // Reset form fields and errors after submission
     setStudentDetails({
       studentId: '',
       fullName: '',
@@ -79,7 +120,15 @@ const AddStudent = () => {
       section: '',
       classId: ''
     });
+    setErrors({});
   };
+
+  const isValidEmail = (email) => {
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -99,8 +148,9 @@ const AddStudent = () => {
                     name="studentId"
                     value={studentDetails.studentId}
                     onChange={handleDropdownChange}
-                    required
+                 
                   />
+                  <span className="text-danger">{errors.studentId}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="fullName" className="form-label">Full Name:</label>
@@ -111,8 +161,9 @@ const AddStudent = () => {
                     name="fullName"
                     value={studentDetails.fullName}
                     onChange={handleDropdownChange}
-                    required
+                
                   />
+                  <span className="text-danger">{errors.fullName}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="registerNo" className="form-label">Register No:</label>
@@ -123,8 +174,9 @@ const AddStudent = () => {
                     name="registerNo"
                     value={studentDetails.registerNo}
                     onChange={handleDropdownChange}
-                    required
+               
                   />
+                  <span className="text-danger">{errors.registerNo}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="gender" className="form-label">Gender:</label>
@@ -134,13 +186,14 @@ const AddStudent = () => {
                     name="gender"
                     value={studentDetails.gender}
                     onChange={handleDropdownChange}
-                    required
+                
                   >
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
+                  <span className="text-danger">{errors.gender}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="dateOfBirth" className="form-label">Date of Birth:</label>
@@ -151,8 +204,9 @@ const AddStudent = () => {
                     name="dateOfBirth"
                     value={studentDetails.dateOfBirth}
                     onChange={handleDropdownChange}
-                    required
+              
                   />
+                  <span className="text-danger">{errors.dateOfBirth}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="address" className="form-label">Address:</label>
@@ -162,8 +216,9 @@ const AddStudent = () => {
                     name="address"
                     value={studentDetails.address}
                     onChange={handleDropdownChange}
-                    required
+                  
                   />
+                  <span className="text-danger">{errors.address}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="emailAddress" className="form-label">Email Address:</label>
@@ -174,11 +229,12 @@ const AddStudent = () => {
                     name="emailAddress"
                     value={studentDetails.emailAddress}
                     onChange={handleDropdownChange}
-                    required
+                
                   />
-                  </div>
+                  <span className="text-danger">{errors.emailAddress}</span>
+                </div>
 
-                  <div className="mb-3">
+                <div className="mb-3">
                   <label htmlFor="standard" className="form-label">Standard:</label>
                   <select
                     className="form-select"
@@ -186,13 +242,14 @@ const AddStudent = () => {
                     name="standard"
                     value={studentDetails.standard}
                     onChange={handleDropdownChange}
-                    required
+                  
                   >
                     <option value="">Select Standard</option>
-                    {Array.from({ length:  10 }, (_, i) => (
-                      <option key={i +  1} value={i +  1}>{i +  1}</option>
+                    {Array.from({ length: 10 }, (_, i) => (
+                      <option key={i + 1} value={i + 1}>{i + 1}</option>
                     ))}
                   </select>
+                  <span className="text-danger">{errors.standard}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="section" className="form-label">Section:</label>
@@ -202,7 +259,7 @@ const AddStudent = () => {
                     name="section"
                     value={studentDetails.section}
                     onChange={handleDropdownChange}
-                    required
+                   
                   >
                     <option value="">Select Section</option>
                     <option value="A">A</option>
@@ -210,6 +267,7 @@ const AddStudent = () => {
                     <option value="C">C</option>
                     <option value="D">D</option>
                   </select>
+                  <span className="text-danger">{errors.section}</span>
                 </div>
                 <div className="text-end">
                   <button type="submit" className="btn btn-success me-2">Submit</button>

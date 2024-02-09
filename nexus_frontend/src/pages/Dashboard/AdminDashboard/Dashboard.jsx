@@ -16,11 +16,13 @@ import AddExam from './AddExam';
 import ViewExam from './ViewExam';
 import Communication from './Announcement';
 import StudentDetails from './ViewStudent';
+import AddAttendanceTeacher from './AddAttendanceTeacher';
+import ViewAttendance from './ViewAttendanceTeacher';
 
 function AdminDashboard() {
   return (
     <div className="admin-dashboard">
-      {/* <AdminSideBar/> */}
+      <AdminSideBar/>
       <section className='d-flex flex-column justify-content-center align-items-center'>
       <div className='col-md-9'>
       <div className=" admin-main-content ">
@@ -32,7 +34,8 @@ function AdminDashboard() {
           <Route path="/viewClass" element={<ViewClass/>}/>
           <Route path="/viewStandard" element={<ViewStandard/>}/>
           <Route path="/viewSubject" element={<ViewSubject/>}/>
-          {/* <Route path="/viewAttendance" element={}/> */}
+          <Route path="/AddAttendanceTeacher" element={<AddAttendanceTeacher/>}/>
+          <Route path="/viewAttendanceTeacher" element={<ViewAttendance/>}/>
           <Route path="/Scheduleclass" element={<ScheduleClass/>}/>
           <Route path="/viewScheduleclass" element={<ViewScheduleClass/>}/>
           <Route path="/addExam" element={<AddExam/>}/>

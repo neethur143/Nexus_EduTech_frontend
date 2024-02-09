@@ -79,7 +79,7 @@ const TeacherSidebar = () => {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="/teacher/takeAttendance"
+                      to="takeAttendance"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >

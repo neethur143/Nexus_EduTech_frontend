@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../Navbar'; 
 import TeacherSidebar from './tea_sidebar'; 
+// import teacherTakeAttendance from './TakeAttendance';
 function TeacherDashboard() {
     return (
         <div className="container-fluid">
@@ -9,7 +10,10 @@ function TeacherDashboard() {
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <TeacherSidebar />
                     <div className="container">
-                        <h1>Teacher Dashboard</h1>                      
+                    <Routes>
+          {/* <Route path="/takeAttendance" element={<teacherTakeAttendance/>} /> */}
+      
+          </Routes>            
                     </div>
                 </main>
             </div>
