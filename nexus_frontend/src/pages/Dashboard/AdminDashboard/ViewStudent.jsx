@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios library
+import axios from 'axios';
 
 const StudentDetails = () => {
   const [students, setStudents] = useState([]);
@@ -7,15 +7,35 @@ const StudentDetails = () => {
   const [formData, setFormData] = useState({
     studentId: '',
     name: '',
-    standard: '', // Change 'class' to 'standard'
-    section: '', // Add section to formData
-    division: '',
+    registrationNumber: '',
+    standard: '',
+    section: '',
+    dob: '',
+    address: '',
+    email: ''
   });
+  const classes = [
+    { classId: 101, standard: '1', section: 'A' },
+    { classId: 102, standard: '1', section: 'B' },
+    { classId: 103, standard: '1', section: 'C' },
+    { classId: 104, standard: '1', section: 'D' },
+    { classId: 201, standard: '2', section: 'A' },
+    { classId: 202, standard: '2', section: 'B' },
+    { classId: 203, standard: '2', section: 'C' },
+    { classId: 204, standard: '2', section: 'D' },
+    { classId: 301, standard: '3', section: 'A' },
+    { classId: 302, standard: '3', section: 'B' },
+    { classId: 303, standard: '3', section: 'C' },
+    { classId: 304, standard: '3', section: 'D' },
+    { classId: 401, standard: '4', section: 'A' },
+    { classId: 402, standard: '4', section: 'B' },
+    { classId: 403, standard: '4', section: 'C' },
+    { classId: 404, standard: '4', section: 'D' },
+  ];
 
   useEffect(() => {
-    // Fetch student data when the component mounts
     fetchStudents();
-  }, []); // Empty dependency array to ensure this effect runs only once
+  }, []);
 
   const fetchStudents = async () => {
     try {
@@ -33,10 +53,14 @@ const StudentDetails = () => {
       ...formData,
       studentId: studentToEdit.studentId,
       name: studentToEdit.name,
+      registrationNumber: studentToEdit.registrationNumber,
       standard: studentToEdit.standard,
       section: studentToEdit.section,
-      division: studentToEdit.division,
+      dob: studentToEdit.dob,
+      address: studentToEdit.address,
+      email: studentToEdit.email
     });
+    // Open modal here
   };
 
   const handleChange = (event) => {
@@ -47,14 +71,41 @@ const StudentDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.put('http://localhost:5011/api/Student/UpdateStudent', formData);
+      const { standard, section, ...restFormData } = formData;
+      const selectedClass = classes.find(c => c.standard === standard && c.section === section);
+      if (!selectedClass) {
+        alert('Please select a valid standard and section.');
+        return;
+      }
+      const { classId } = selectedClass;
+
+      // Format date to "yyyy-MM-dd" before sending it to the backend
+      const formattedDate = formData.dob.split('T')[0];
+
+      const formDataWithClassId = {
+        ...restFormData,
+        classId,
+        dob: formattedDate,
+        registrationNumber: restFormData.registrationNumber // Include registration number
+      };
+
+      const response = await axios.put('http://localhost:5011/api/Student/UpdateStudent', formDataWithClassId);
       const updatedStudent = response.data;
       const updatedStudents = students.map(student =>
         student.studentId === updatedStudent.studentId ? updatedStudent : student
       );
       setStudents(updatedStudents);
       setEditableStudent(null);
-      setFormData({ studentId: '', name: '', standard: '', section: '', division: '' });
+      setFormData({
+        studentId: '',
+        name: '',
+        registrationNumber: '',
+        standard: '',
+        section: '',
+        dob: '',
+        address: '',
+        email: ''
+      });
       alert('Student details updated successfully!');
     } catch (error) {
       console.error('Error updating student:', error);
@@ -87,6 +138,10 @@ const StudentDetails = () => {
             <th scope="col">Name</th>
             <th scope="col">Standard</th>
             <th scope="col">Section</th>
+        
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Address</th>
+            <th scope="col">Email</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -94,30 +149,76 @@ const StudentDetails = () => {
           {students.map((student, index) => (
             <tr key={student.studentId}>
               <th scope="row">{index + 1}</th>
-              <td>{student.registrationNumber}</td>
-              <td>{editableStudent && editableStudent.studentId === student.studentId ?
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                /> : student.name}
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="text"
+                    name="registrationNumber"
+                    value={formData.registrationNumber}
+                    onChange={handleChange}
+                  /> : student.registrationNumber}
               </td>
-              <td>{editableStudent && editableStudent.studentId === student.studentId ?
-                <input
-                  type="text"
-                  name="standard"
-                  value={formData.standard}
-                  onChange={handleChange}
-                /> : student.standard}
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                  /> : student.name}
               </td>
-              <td>{editableStudent && editableStudent.studentId === student.studentId ?
-                <input
-                  type="text"
-                  name="section"
-                  value={formData.section}
-                  onChange={handleChange}
-                /> : student.section}
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <select
+                    name="standard"
+                    value={formData.standard}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Standard</option>
+                    {Array.from(new Set(classes.map(c => c.standard))).map(standard => (
+                      <option key={standard} value={standard}>{standard}</option>
+                    ))}
+                  </select> : student.standard}
+              </td>
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <select
+                    name="section"
+                    value={formData.section}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Section</option>
+                    {classes.filter(c => c.standard === formData.standard).map(c => (
+                      <option key={c.section} value={c.section}>{c.section}</option>
+                    ))}
+                  </select> : student.section}
+              </td>
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                  /> : student.dob}
+              </td>
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                  /> : student.address}
+              </td>
+              <td>
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  /> : student.email}
               </td>
               <td>
                 {editableStudent && editableStudent.studentId === student.studentId ? (

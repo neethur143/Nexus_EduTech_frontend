@@ -44,6 +44,7 @@ function SignIn() {
                 const student = response.data.find((user) => user.userName === validUser.username);
                 if (student) {
                   const { id } = student;
+                  
                   sessionStorage.setItem("uid", id);
                   sessionStorage.setItem("token", validUser.token);
                   setLoggedInStudentId(id); // Store the logged-in student ID in the context

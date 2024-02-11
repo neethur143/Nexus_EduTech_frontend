@@ -1,83 +1,143 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 const ScheduleClass = () => {
-    // const [standard, setStandard] = useState('');
-    // const [division, setDivision] = useState('');
+    const dummyData = [
+        { standard: '1', section: 'A', classId: 101 },
+        { standard: '1', section: 'B', classId: 102 },
+        { standard: '2', section: 'A', classId: 201 },
+        { standard: '2', section: 'B', classId: 202 },
+        // ... other standards and sections
+    ];
 
-    const [teacher, setTeacher] = useState('');
-    const [subject, setSubject] = useState('');
+    const dummySubject = [
+        { subjectId: 11, Subject: 'English' },
+        { subjectId: 12, Subject: 'Maths' },
+    ];
+
+    const [standard, setStandard] = useState('');
+    const [section, setSection] = useState('');
+    const [classId, setClassId] = useState('');
+    const [teachers, setTeachers] = useState([]);
+    const [teacherId, setTeacherId] = useState('');
     const [time, setTime] = useState('');
     const [date, setDate] = useState('');
-    const [classId, setClassId] = useState('');
+    const [subjectId, setSubjectId] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
+    const [successAlert, setSuccessAlert] = useState(false);
 
-    // Dummy data for dropdowns
-    // const standards = ['1st', '2nd', '3rd', '4th', '5th'];
-    // const divisions = ['A', 'B', 'C'];
-    const teacherList = [
-        { id: 1, name: 'Teacher 1' },
-        { id: 2, name: 'Teacher 2' },
-        { id: 3, name: 'Teacher 3' }
-    ];
-    const subjects = ['Math', 'Science', 'English'];
+    useEffect(() => {
+        if (standard && section) {
+            const selectedClass = dummyData.find(data => data.standard === standard && data.section === section);
+            if (selectedClass) {
+                setClassId(selectedClass.classId);
+            } else {
+                setClassId('');
+            }
+        }
+    }, [standard, section]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5011/api/Teacher/GetAll")
+            .then((response) => {
+                setTeachers(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission here
+        
+        if (standard && section && teacherId && time && date && subjectId) {
+            let scheduleclass = {
+                classId: classId,
+                teacherId: parseInt(teacherId),
+                sessionTime: time,
+                sessionDate: date,
+                subjectId: parseInt(subjectId),
+            };
+            console.log(scheduleclass);
+            axios
+                .post("http://localhost:5011/api/ScheduleClass/AssignTeacher", scheduleclass)
+                .then((response) => {
+                    console.log(response.data);
+                    // Reset form fields after successful submission
+                    setStandard('');
+                    setSection('');
+                    setTeacherId('');
+                    setTime('');
+                    setDate('');
+                    setSubjectId('');
+                    setSuccessAlert(true);
+                    setTimeout(() => {
+                        setSuccessAlert(false);
+                    }, 3000); // Hide success alert after 3 seconds
+                })
+                .catch((error) => console.log(error));
+        } else {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000); // Hide validation alert after 3 seconds
+        }
     };
+
+    // Extracting unique standard values
+    const uniqueStandards = [...new Set(dummyData.map(data => data.standard))];
 
     return (
         <div>
+            <h2 className='text-center'>Schedule Class</h2>
             <Form onSubmit={handleSubmit}>
-                {/* <Form.Group controlId="standard">
+                <Form.Group controlId="standard">
                     <Form.Label>Select Standard</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setStandard(e.target.value)}>
+                    <Form.Control as="select" onChange={(e) => setStandard(e.target.value)} value={standard}>
                         <option value="">Select...</option>
-                        {standards.map((std, index) => (
+                        {uniqueStandards.map((std, index) => (
                             <option key={index} value={std}>{std}</option>
                         ))}
                     </Form.Control>
-                </Form.Group> */}
-                {/* 
-                <Form.Group controlId="division">
-                    <Form.Label>Select Division</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setDivision(e.target.value)}>
-                        <option value="">Select...</option>
-                        {divisions.map((div, index) => (
-                            <option key={index} value={div}>{div}</option>
-                        ))}
-                    </Form.Control>
-                </Form.Group> */}
-
-                <Form.Group controlId="classId">
-                    <Form.Label>Class ID</Form.Label>
-                    <Form.Control type="text" value={classId} onChange={(e) => setClassId(e.target.value)} />
                 </Form.Group>
 
+                <Form.Group controlId="section">
+                    <Form.Label>Select Section</Form.Label>
+                    <Form.Control as="select" onChange={(e) => setSection(e.target.value)} value={section}>
+                        <option value="">Select...</option>
+                        {dummyData
+                            .filter(data => data.standard === standard)
+                            .map((data, index) => (
+                                <option key={index} value={data.section}>{data.section}</option>
+                            ))}
+                    </Form.Control>
+                </Form.Group>
 
                 <Form.Group controlId="teacher">
                     <Form.Label>Select Teacher</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setTeacher(e.target.value)}>
+                    <Form.Control as="select" onChange={(e) => setTeacherId(e.target.value)} value={teacherId}>
                         <option value="">Select...</option>
-                        {teacherList.map((t) => (
-                            <option key={t.id} value={t.id}>{t.name}</option>
+                        {teachers.map((teacher) => (
+                            <option key={teacher.teacherId} value={teacher.teacherId}>{teacher.name}</option>
                         ))}
                     </Form.Control>
                 </Form.Group>
 
                 <Form.Group controlId="subject">
                     <Form.Label>Select Subject</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setSubject(e.target.value)}>
+                    <Form.Control as="select" onChange={(e) => setSubjectId(e.target.value)} value={subjectId}>
                         <option value="">Select...</option>
-                        {subjects.map((subj, index) => (
-                            <option key={index} value={subj}>{subj}</option>
+                        {dummySubject.map((subj) => (
+                            <option key={subj.subjectId} value={subj.subjectId}>{subj.Subject}</option>
                         ))}
                     </Form.Control>
                 </Form.Group>
 
                 <Form.Group controlId="time">
                     <Form.Label>Time</Form.Label>
-                    <Form.Control type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+                    <Form.Control type="text" value={time} onChange={(e) => setTime(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group controlId="date">
@@ -89,10 +149,8 @@ const ScheduleClass = () => {
                     Submit
                 </Button>
             </Form>
-
-
-
-
+            {showAlert && <Alert variant="danger">All fields are required!</Alert>}
+            {successAlert && <Alert variant="success">Schedule class successfully!</Alert>}
         </div>
     );
 };

@@ -1,46 +1,40 @@
 import React from 'react';
- import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function StudentSidebar() {
+    const sidebarStyle = {
+        backgroundColor: 'black', // Set background color to black
+        color: 'white', // Set text color to white
+        padding: '20px' // Add padding to the sidebar
+    };
+
+    const menuItemStyle = {
+        fontSize: '18px', // Set font size to 18px
+        marginBottom: '10px' // Add margin bottom to each menu item
+    };
+
     return (
-        <div class="main-menu menu-dark menu-fixed menu-shadow menu-border menu-accordion">
-          {/* <!-- main menu header--> */}
-          {/* <!-- / main menu header--> */}
-          {/* <!-- main menu content--> */}
-          <div class="main-menu-content">
-            <ul
-              id="main-menu-navigation"
-              data-menu="menu-navigation"
-              class="navigation navigation-main"
-            >
-              <li class=" nav-item">
-                <Link to="/student">
-                  <i class="icon-home3"></i>
-                  <span data-i18n="nav.dash.main" class="menu-title">
-                    Dashboard
-                  </span>
-                </Link>
-              </li>
-            
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Student
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="student/viewStudentProfile"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Profile
-                    </Link>
-                  </li>
-                </ul>
-              </li>
+        <div style={sidebarStyle} className="main-menu menu-dark menu-fixed menu-shadow menu-border menu-accordion">
+            <div className="main-menu-content">
+                <ul id="main-menu-navigation" data-menu="menu-navigation" className="navigation navigation-main">
+                    <li className="nav-item">
+                        <Link to="/student" style={menuItemStyle}>
+                            <i className="icon-home3"></i>
+                            <span data-i18n="nav.dash.main" className="menu-title">Dashboard</span>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <a href="#" style={menuItemStyle}>
+                            <i className="icon-stack-2"></i>
+                            <span data-i18n="nav.page_layouts.main" className="menu-title">Student</span>
+                        </a>
+                        <ul className="menu-content">
+                            <li>
+                                <Link to="student/viewStudentProfile" style={menuItemStyle} className="menu-item">View Profile</Link>
+                            </li>
+                        </ul>
+                    </li>
               <li class=" nav-item">
                 <a href="#">
                   <i class="icon-stack-2"></i>
@@ -89,7 +83,7 @@ function StudentSidebar() {
                 <ul class="menu-content">
                   <li>
                     <Link
-                      to="student/viewAttendanceList"
+                      to="sviewAttendanceList"
                       data-i18n="nav.page_layouts.1_column"
                       class="menu-item"
                     >
@@ -99,26 +93,7 @@ function StudentSidebar() {
                 </ul>
               </li>
             
-{/*             
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Teacher
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/viewTeacherList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Teacher
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}             
+            
               <li class=" nav-item">
                 <a href="#">
                   <i class="icon-stack-2"></i>
@@ -138,123 +113,7 @@ function StudentSidebar() {
                   </li>
                 </ul>
               </li>
-              {/* <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">EXAM & RESULT</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Exam Time-Table
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/viewExamttList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Exam Time-Table
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
              
-              {/* <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Question Paper
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/viewQuestionPaperList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Question Paper
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
-             
-              {/* <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Event
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/viewEventList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Event
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
-            
-              {/* <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Feedback
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/addFeedback"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Give Feedback
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
-{/*               
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Leave Request
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/student/addLeaveRequest"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Add Leave Request
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/student/viewLeaveRequest"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Leave Request
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
             </ul>
           </div>
 

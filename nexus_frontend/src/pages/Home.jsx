@@ -1,26 +1,34 @@
-import React from 'react'
-import Header from '../component/Header'
-import Footer from '../component/Footer'
-import video from '../component/Assets/universityvideo.mp4'
+import React from 'react';
+import Header from '../component/Header';
+import Footer from '../component/Footer';
+import video from '../component/Assets/universityvideo.mp4';
+
 function Home() {
-    return (
-        <div>
-      <div className="home">
-        <br></br>
-        <div className="content">
-          <p class="spoiler" style={{ backgroundPosition: 'right', backgroundSize: '100% 100%', backgroundImage: 'linear-gradient(#a0aec0, #a0aec0)', display: 'inline', backgroundRepeat: 'no-repeat', transition: 'all 500ms ease-in-out', }}>
-            <h1 id='video-text' className=''>WHY STUDY IN NEXUS EDUTECH?</h1>
-          </p>
-          <hr />
-          <video width={1360} height={500} muted autoPlay loop style={{ zIndex: '-999', top: "90%", left: "50%", transform: "translate(2%, -2%)" }}>
-            <source src={video} type="video/mp4" />
-          </video>
+  return (
+    <div className="home" style={{ position: 'relative' }}>
+    
+      <video
+        src={video}
+        autoPlay
+        loop
+        muted
+        style={{
+          position: 'fixed',
+          right: 0,
+          bottom: 0,
+          minWidth: '100%',
+          minHeight: '100%',
+          zIndex: -1
+        }}
+      />
+      <div className="content" style={{ zIndex: 1, position: 'relative' }}>
+        <p className="spoiler" style={{ backgroundPosition: 'right', backgroundSize: '100% 100%', backgroundImage: 'linear-gradient(#a0aec0, #a0aec0)', display: 'inline', backgroundRepeat: 'no-repeat', transition: 'all 500ms ease-in-out' }}>
+        <h1 id='video-text' className='' style={{ color: 'white' }}>WHY STUDY IN NEXUS EDUTECH?</h1>
+        </p>
+        <hr />
+      </div>
 
-        </div>
-
-
-
-        <div className="container">
+      <div className="container">
           <div className="main-txt">
             {/* <h1>O</h1> */}
           </div>
@@ -111,10 +119,8 @@ function Home() {
         <div>
         </div>
         <Footer />
-
-      </div>
     </div>
-    )
+  );
 }
 
 export default Home;

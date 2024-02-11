@@ -6,7 +6,11 @@ const AdminSideBar = () => {
       <>
    
       <div>
-        <nav id="sidebarMenu" className="collapse d-lg-block sidebar collapse bg-white border border-dark" style={{ marginTop: "56px",marginLeft:'12px',position:'fixed',top:0,left: 0,right: 0, zIndex:100 }}>
+       <nav
+          id="sidebarMenu"
+          className="collapse d-lg-block sidebar collapse bg-dark text-light"
+          style={{ marginTop: '56px', marginLeft: '12px', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}
+        >
           <div className="position-fixed  ">
             <div className="list-group list-group-flush mx-4  border border-dark mw-100">
               <a href="#" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
@@ -23,8 +27,8 @@ const AdminSideBar = () => {
               Student
               </button>
               <ul className="dropdown-menu">
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-lock fa-fw me-3" /><span><Link to="addStudent" className="menu-item">Add Student</Link></span></a></li>
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-chart-line fa-fw me-3" /><span><Link to="viewStudent" className="menu-item">View Student</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-user-graduate fa-fw me-3" /><span><Link to="addStudent" className="menu-item">Add Student</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-user-graduate fa-fw me-3" /><span><Link to="viewStudent" className="menu-item">View Student</Link></span></a></li>
               </ul>
             </div>
               <br />
@@ -34,8 +38,8 @@ const AdminSideBar = () => {
               Teacher
               </button>
               <ul className="dropdown-menu">
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-chart-bar fa-fw me-3" /><span><Link to="addTeacher" className="menu-item">Add Teacher</Link></span></a></li>
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-globe fa-fw me-3" /><span><Link to="viewTeacher" className="menu-item">View Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="	fas fa-chalkboard-teacher fa-fw me-3" /><span><Link to="addTeacher" className="menu-item">Add Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="	fas fa-chalkboard-teacher fa-fw me-3" /><span><Link to="viewTeacher" className="menu-item">View Teacher</Link></span></a></li>
               </ul>
               </div>
          
@@ -69,8 +73,9 @@ const AdminSideBar = () => {
               Attendance
               </button>
               <ul className="dropdown-menu">
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-money-bill fa-fw me-3" /><span><Link to="AddAttendanceTeacher" className="menu-item">Add Attendance Teacher</Link></span></a></li>
-                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-money-bill fa-fw me-3" /><span><Link to="viewAttendanceTeacher" className="menu-item">View Attendance Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-user-check fa-fw me-3" /><span><Link to="AddAttendanceTeacher" className="menu-item">Add Attendance Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-user-check fa-fw me-3" /><span><Link to="viewAttendanceTeacher" className="menu-item">View Attendance Teacher</Link></span></a></li>
+                <li><a href="#" className="list-group-item list-group-item-action py-2 ripple"><i className="fas fa-user-check fa-fw me-3" /><span><Link to="viewAttendanceTeacherMonth" className="menu-item">View Month Teacher</Link></span></a></li>
               </ul>
              
               </div>

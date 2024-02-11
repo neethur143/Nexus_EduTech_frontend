@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
 
-const ViewTimeTable = () => {
+const ViewTimeTableTeacher= () => {
     const [scheduleData, setScheduleData] = useState([]);
     const [teachersData, setTeachersData] = useState([]);
     const [classesData, setClassesData] = useState([]);
@@ -105,4 +105,4 @@ const ViewTimeTable = () => {
     );
 };
 
-export default ViewTimeTable;
+export default ViewTimeTableTeacher;

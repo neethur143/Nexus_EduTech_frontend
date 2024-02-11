@@ -38,11 +38,11 @@ function Navbar() {
             </ul>
            
             <ul className="navbar-nav ms-auto text-white">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a className="nav-link" href="#">
                   Notifications <span className="badge bg-danger rounded-pill">2</span>
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item dropdown">
                 <a
                   className={`nav-link dropdown-toggle ${
@@ -55,7 +55,7 @@ function Navbar() {
                   aria-expanded={dropdownOpen}
                   onClick={handleDropdownClick}
                 >
-                 Neethu R
+              Profile
                 </a>
                 <ul
                   className={`dropdown-menu bg-black dropdown-menu-end ${
@@ -64,11 +64,11 @@ function Navbar() {
                   aria-labelledby="userDropdown"
                   style={{ minWidth: '200px' }}
                 >
-                  <li>
+                  {/* <li>
                     <a className="dropdown-item text-white" href="#">
                     <i  /><span><Link to="/" className="menu-item">Profile</Link></span>
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                   
                     <a href="#" className="dropdown-item text-white"><i  /><span><Link to="/" className="menu-item">Logout</Link></span></a>

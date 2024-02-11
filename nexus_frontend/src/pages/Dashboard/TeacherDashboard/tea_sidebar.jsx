@@ -1,295 +1,65 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-const TeacherSidebar = () => {
-    return (
-        <div class="main-menu menu-dark menu-fixed menu-shadow menu-border menu-accordion">
-          {/* <!-- main menu header--> */}
-          {/* <!-- / main menu header--> */}
-          {/* <!-- main menu content--> */}
-          <div class="main-menu-content">
-            <ul
-              id="main-menu-navigation"
-              data-menu="menu-navigation"
-              class="navigation navigation-main"
-            >
-              <li class=" nav-item">
-                <Link to="/teacher">
-                  <i class="icon-home3"></i>
-                  <span data-i18n="nav.dash.main" class="menu-title">
-                    Dashboard
-                  </span>
-                </Link>
-              </li>
-              <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">TEACHER</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Teacher
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewProfile"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Profile
+const TeacherSidebar = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    return (
+        <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ backgroundColor: 'black' }}>
+            <div className="sidebar-header" onClick={toggleSidebar}>
+                <h3 style={{ color: 'white' }}>Teacher</h3>
+            </div>
+            <ul className="sidebar-menu">
+                <li className="sidebar-item">
+                    <Link to="/teacher" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-home sidebar-icon" style={{ color: 'white' }}></i>
+                        Dashboard
                     </Link>
-                  </li>
-                </ul>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Remark
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/addRemark"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Add Remark
+                </li>
+                <li className="sidebar-item">
+                    <Link to="viewProfile" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-user-graduate sidebar-icon" style={{ color: 'white' }}></i>
+                        View Profile
                     </Link>
-                  </li>
-                  
-                </ul>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Attendence
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="takeAttendance"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Take Attendence
+                </li>
+                <li className="sidebar-item">
+                    <Link to="addmark" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-sticky-note sidebar-icon" style={{ color: 'white' }}></i>
+                        Add Mark
                     </Link>
-                  </li>
-                </ul>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Notice
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewNotice"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Notice
+                </li>
+                <li className="sidebar-item">
+                    <Link to="takeAttendance" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-calendar-check sidebar-icon" style={{ color: 'white' }}></i>
+                        Take Attendance
                     </Link>
-                  </li>
-                </ul>
-              </li>
-              {/* <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">TIMETABLE</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Time-Table
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewTimeTable"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Time-Table
+                </li>
+                <li className="sidebar-item">
+                    <Link to="/teacher/viewNotice" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-clipboard-list sidebar-icon" style={{ color: 'white' }}></i>
+                        View Attendance
                     </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/teacher/viewMyTimeTable"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      My Time-Table
+                </li>
+                <li className="sidebar-item">
+                    <Link to="viewtimetableteacher" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-comments sidebar-icon" style={{ color: 'white' }}></i>
+                       View Schedule class
                     </Link>
-                  </li>
-                </ul>
-              </li> */}
-              {/* <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">EXAM & RESULT</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Exam Time-Table
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewExamTimeTable"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Exam Time-Table
+                </li>
+                <li className="sidebar-item">
+                    <Link to="updatemark" className="sidebar-link" style={{ color: 'white' }}>
+                        <i className="fas fa-clipboard sidebar-icon" style={{ color: 'white' }}></i>
+                       UpdateMark
                     </Link>
-                  </li>
-                </ul>
-              </li> */}
-              
-              {/* <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Question Paper
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewQuestionPaper"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Question Paper
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">
-                  EVENTS & ACTIVITIES
-                </span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Event
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/viewEvent"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Event
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
-              <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">Feedback</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Feedback
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/giveFeedback"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Give Feedback
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li class=" navigation-header">
-                <span data-i18n="nav.category.layouts">Leave Request</span>
-                <i
-                  data-toggle="tooltip"
-                  data-placement="right"
-                  data-original-title="Layouts"
-                  class="icon-ellipsis icon-ellipsis"
-                ></i>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Leave Request
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="/teacher/addLeaveRequest"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      Add Leave Request
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/teacher/viewLeaveRequest"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Leave Request
-                    </Link>
-                  </li>
-                </ul>
-              </li>
+                </li>            
             </ul>
-          </div>
-          
+            <div className="toggle-sidebar" onClick={toggleSidebar}>
+                <i className={`fas fa-angle-double-${isSidebarOpen ? 'left' : 'right'}`}></i>
+            </div>
         </div>
     );
 };
