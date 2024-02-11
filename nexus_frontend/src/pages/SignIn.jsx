@@ -1,100 +1,148 @@
-import React from 'react'
-import Header from '../component/Header'
-import Footer from '../component/Footer'
-import { Link } from 'react-router-dom'
-import {
-    MDBBtn,
-    MDBContainer,
-    MDBCard,
-    MDBCardBody,
-    MDBCardImage,
-    MDBRow,
-    MDBCol,
-    MDBIcon,
-    MDBInput
-  }
-  from 'mdb-react-ui-kit'
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+// import { StudentContext } from './StudentContext';
+import { StudentContext } from './Dashboard/StudentDashboard/StudentContext'; // Make sure to import the context from the correct path
+
 function SignIn() {
-    // return (
-    //     <div>
-    //         <div className="form-body">
-    //             <div className="row">
-    //                 <div className="form-holder">
-    //                     <div className="form-content">
-    //                         <div className="form-items">
-    //                             <h3 className='text-center'>Sign In</h3>
-    //                             <form className="requires-validation" noValidate >
-    //                                 <div className="col-md-12">
-    //                                     <label htmlFor="email" className="form-label">Email Address:</label>
-    //                                     <input className="form-control" type="email" name="email" placeholder="Enter E-mail Address" required />
-    //                                     <div className="valid-feedback">Email field is valid!</div>
-    //                                     <div className="invalid-feedback">Email field cannot be blank!</div>
-    //                                 </div><br></br>
-    //                                 <div className="col-md-12">
-    //                                     <label htmlFor="password" className="form-label">Password :</label>
-    //                                     <input className="form-control" type="password" name="password" placeholder="Enter Password" required />
-    //                                     <div className="valid-feedback">Password field is valid!</div>
-    //                                     <div className="invalid-feedback">Password field cannot be blank!</div>
-    //                                 </div>
-    //                                 <br></br>
-    //                                 <div className="form-check">
-    //                                     <input className="form-check-input" type="checkbox" defaultValue id="invalidCheck" required />
-    //                                     <label className="form-check-label">Remember Me</label>
-    //                                     <div className="invalid-feedback">Please confirm that the entered data are all correct!</div>
-    //                                 </div>
-    //                                 <div className="form-button mt-3 text-center ">
-    //                                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
-    //                                 </div>
-    //                                 <div className="d-flex justify-content-between">
-    //                                     <span className="d-block mt-4">
-    //                                     <Link to="/signup" className="small text-white">New User? Sign Up Here</Link>
-    //                                     </span>
-    //                                     <span className="d-block mt-4">
-    //                                        <Link to="/signup" className="small text-white">New User? Sign Up Here</Link>
-    //                                     </span>
-    //                                 </div>
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({ username: "", password: "" });
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const { setLoggedInStudentId } = useContext(StudentContext); // Use the context to set the logged-in student ID
 
-    //                             </form>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
+  const validateForm = () => {
+    let isValid = true;
+    let newErrors = {};
 
-    //         <Footer />
-    //     </div>
-    // )
-    return (
-        <MDBContainer className="my-5 w-50">   
-          <MDBCard>
-            <MDBRow className=' g-0'> 
-              <MDBCol md='6'>
-                <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp' alt="login form" className='rounded-start w-100'/>
-              </MDBCol>
-    
-              <MDBCol md='6'>
-                <MDBCardBody className='d-flex flex-column'>
-    
-                  <div className='d-flex flex-row mt-2'>
-                    <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
-              
-                  </div>
-    
-                  <h5 className="fw-normal my-4 pb-3 fs-2 text-center" style={{letterSpacing: '1px'}}>Login</h5>
-    
-                    <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg"/>
-                    <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg"/>
-    
-                  <MDBBtn className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
-                  <a className="small text-muted" href="#!">Forgot password?</a>
-                  <p className="mb-5 pb-lg-2">  <Link to="/signup" className="small text-black">New User? Sign Up Here</Link></p>   
-                </MDBCardBody>
-              </MDBCol>            
-            </MDBRow>
-          </MDBCard>
-    
-        </MDBContainer>
-      );
+    if (!user.username.trim()) {
+      newErrors.username = "Please enter your username.";
+      isValid = false;
+    }
+
+    if (!user.password.trim()) {
+      newErrors.password = "Please enter your password.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      axios
+        .post("http://localhost:5011/api/User/Login", user)
+        .then((response) => {
+          const validUser = response.data;
+          if (validUser.role === "student") {
+            // Fetch user ID from the API
+            axios.get("http://localhost:5011/api/User/GetAllUser")
+              .then((response) => {
+                const student = response.data.find((user) => user.userName === validUser.username);
+                if (student) {
+                  const { id } = student;
+                  sessionStorage.setItem("uid", id);
+                  sessionStorage.setItem("token", validUser.token);
+                  setLoggedInStudentId(id); // Store the logged-in student ID in the context
+                  navigate("/student/viewStudentProfile"); // Redirect to the profile page
+                } else {
+                  setInvalidCredentials(true);
+                  window.alert("User not found.");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                setInvalidCredentials(true);
+                window.alert("Error occurred. Please try again later.");
+              });
+          } else {
+            sessionStorage.setItem("uid", validUser.username);
+            sessionStorage.setItem("token", validUser.token);
+            if (validUser.role === "admin") {
+              navigate("/admin");
+            } else if (validUser.role === "teacher") {
+              navigate("/teacher");
+            }
+          }
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+          setInvalidCredentials(true);
+          window.alert("Invalid username or password.");
+        });
+    }
+  };
+
+  return (
+    <div className="container my-5 w-50">
+      <div className="card">
+        <div className="row g-0">
+          <div className="col-md-6">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp" alt="login form" className="rounded-start w-100" />
+          </div>
+
+          <div className="col-md-6">
+            <div className="card-body d-flex flex-column">
+              <h5 className="fw-normal my-4 pb-3 fs-2 text-center" style={{ letterSpacing: '1px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <i className="fas fa-lock" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}></i>
+                  <div style={{ backgroundColor: '#ffcccb', width: '20px', height: '10px', borderRadius: '5px' }}></div>
+                </div>
+                Login
+              </h5>
+
+              <form onSubmit={handleSubmit} className="row g-3 needs-validation" noValidate>
+                <div className="mb-4">
+                  <label htmlFor="username" className="form-label">UserName</label>
+                  <input
+                    type="text"
+                    className={`form-control ${errors.username && 'is-invalid'}`}
+                    id="username"
+                    value={user.username}
+                    onChange={(e) =>
+                      setUser((prevstate) => ({
+                        ...prevstate,
+                        username: e.target.value,
+                      }))
+                    }
+                  />
+                  {errors.username && <div className="invalid-feedback">{errors.username}</div>}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <input
+                    type="password"
+                    className={`form-control ${errors.password && 'is-invalid'}`}
+                    id="password"
+                    value={user.password}
+                    onChange={(e) =>
+                      setUser((prevstate) => ({
+                        ...prevstate,
+                        password: e.target.value,
+                      }))
+                    }
+                  />
+                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                  {invalidCredentials && <div className="invalid-feedback">Invalid username or password.</div>}
+                </div>
+
+                <button className='btn btn-dark btn-lg mb-3' type='submit'>Login</button>
+              </form>
+
+              <div className='d-flex justify-content-between'>
+                <Link to="/forgot-password" className="large text-muted">Forgot password?</Link>
+                <Link to="/signup" className="large text-black">New User? Sign Up Here</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default SignIn
+export default SignIn;

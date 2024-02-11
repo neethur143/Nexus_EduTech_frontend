@@ -3,16 +3,48 @@ import React from 'react';
 function Footer() {
   return (
     <div className="container-fluid navbar-light" style={{ backgroundColor: 'rgba(227, 242, 253, 0.8)' }}>
-  <footer className="d-flex flex-wrap justify-content-between align-items-center px-4 py-3 border-top text-white">
-    <p className="col-md-4 mb-0 text-muted">© 2022 My Blog, Inc</p>
-    <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none text-white">
-      <svg className="bi me-2" width={40} height={32}><use xlinkHref="#bootstrap" /></svg>
-    </a>
-    <ul className="nav col-md-4 justify-content-end">
-      <li className="nav-item"><a href="#" className="nav-link px-2 text-muted text-white">Home</a></li>
-      <li className="nav-item"><a href="#" className="nav-link px-2 text-muted text-white">About Us</a></li>
-    </ul>
-  </footer>
+  <div className="container">
+    <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <div className="col mb-3">
+        <a href="/" className="d-flex align-items-center mb-3 link-dark text-decoration-none">
+          <svg className="bi me-2" width={40} height={32}><use xlinkHref="#bootstrap" /></svg>
+        </a>
+        <p className="text-muted">© 2022</p>
+      </div>
+      <div className="col mb-3">
+      </div>
+      <div className="col mb-3">
+        <h5>Section</h5>
+        <ul className="nav flex-column">
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+      <div className="col mb-3">
+        <h5>Section</h5>
+        <ul className="nav flex-column">
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+      <div className="col mb-3">
+        <h5>Section</h5>
+        <ul className="nav flex-column">
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
+          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
 </div>
 
   );

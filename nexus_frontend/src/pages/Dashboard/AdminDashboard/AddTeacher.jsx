@@ -28,9 +28,21 @@ const AddTeacher = () => {
 
   const classes = [
     { classId: 101, standard: '1', section: 'A' },
-    { classId: 102, standard: '2', section: 'B' },
-    { classId: 103, standard: '3', section: 'C' },
-    { classId: 104, standard: '4', section: 'D' }
+    { classId: 102, standard: '1', section: 'B' },
+    { classId: 103, standard: '1', section: 'C' },
+    { classId: 104, standard: '1', section: 'D' },
+    { classId: 201, standard: '2', section: 'A' },
+    { classId: 202, standard: '2', section: 'B' },
+    { classId: 203, standard: '2', section: 'C' },
+    { classId: 204, standard: '2', section: 'D' },
+    { classId: 301, standard: '3', section: 'A' },
+    { classId: 302, standard: '3', section: 'B' },
+    { classId: 303, standard: '3', section: 'C' },
+    { classId: 304, standard: '3', section: 'D' },
+    { classId: 401, standard: '4', section: 'A' },
+    { classId: 402, standard: '4', section: 'B' },
+    { classId: 403, standard: '4', section: 'C' },
+    { classId: 404, standard: '4', section: 'D' }
   ];
 
   const handleSubmit = async (event) => {
@@ -133,96 +145,104 @@ const AddTeacher = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Add Teacher</h2>
-      <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-          <label className="form-label">Teacher ID:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="teacherId"
-            value={teacherDetails.teacherId}
-            onChange={handleChange}
-          />
-          <span className="text-danger">{errors.teacherId}</span>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Full Name:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="fullName"
-            value={teacherDetails.fullName}
-            onChange={handleChange}
-          />
-          <span className="text-danger">{errors.fullName}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Gender:</label>
-          <select
-            className="form-control"
-            name="gender"
-            value={teacherDetails.gender}
-            onChange={handleChange}
-          >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-          <span className="text-danger">{errors.gender}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Date of Birth:</label>
-          <input
-            type="date"
-            className="form-control"
-            name="dob"
-            value={teacherDetails.dob}
-            onChange={handleChange}
-          />
-          <span className="text-danger">{errors.dob}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Address:</label>
-          <textarea
-            className="form-control"
-            name="address"
-            value={teacherDetails.address}
-            onChange={handleChange}
-          ></textarea>
-          <span className="text-danger">{errors.address}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Contact Number:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="contactNumber"
-            value={teacherDetails.contactNumber}
-            onChange={handleChange}
-          />
-          <span className="text-danger">{errors.contactNumber}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Email:</label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            value={teacherDetails.email}
-            onChange={handleChange}
-          />
-          <span className="text-danger">{errors.email}</span>
-        </div>
-
-        <div className="mb-3">
+    <div className="container ">
+    <div className="row">
+      <div className="col-md-8 offset-md-2">
+        <div className="card mt-5">
+          <div className="card-header">
+            <h4 className="card-title">Add Teacher</h4>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="teacherId" className="form-label">Teacher ID:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="teacherId"
+                  name="teacherId"
+                  value={teacherDetails.teacherId}
+                  onChange={handleChange}
+                />
+                <span className="text-danger">{errors.teacherId}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="fullName" className="form-label">Full Name:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="fullName"
+                  name="fullName"
+                  value={teacherDetails.fullName}
+                  onChange={handleChange}
+                />
+                <span className="text-danger">{errors.fullName}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="gender" className="form-label">Gender:</label>
+                <select
+                  className="form-select"
+                  id="gender"
+                  name="gender"
+                  value={teacherDetails.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span className="text-danger">{errors.gender}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="dob" className="form-label">Date of Birth:</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="dob"
+                  name="dob"
+                  value={teacherDetails.dob}
+                  onChange={handleChange}
+                  max="2002-12-31"
+                />
+                <span className="text-danger">{errors.dob}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address" className="form-label">Address:</label>
+                <textarea
+                  className="form-control"
+                  id="address"
+                  name="address"
+                  value={teacherDetails.address}
+                  onChange={handleChange}
+                />
+                <span className="text-danger">{errors.address}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="contactNumber" className="form-label">Contact Number:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="contactNumber"
+                  name="contactNumber"
+                  value={teacherDetails.contactNumber}
+                  onChange={handleChange}
+                />
+                <span className="text-danger">{errors.contactNumber}</span>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email:</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  value={teacherDetails.email}
+                  onChange={handleChange}
+                />
+                <span className="text-danger">{errors.email}</span>
+              </div>
+              <div className="mb-3">
           <label className="form-label">Standard:</label>
           <select
             className="form-control"
@@ -253,10 +273,16 @@ const AddTeacher = () => {
           </select>
           <span className="text-danger">{errors.section}</span>
         </div>
-
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+              <div className="text-end">
+                <button type="submit" className="btn btn-success me-2">Submit</button>
+                <button type="reset" className="btn btn-danger">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
   );
 };
 

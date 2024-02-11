@@ -2,9 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AdminSideBar from './SideBar';
-import Navbar from '../Navbar';
 import AddStudent from './AddStudent';
-import ViewStudentDetail from '../StudentDashboard/ViewStudentProfile';
 import AddTeacher from './AddTeacher';
 import ViewTeacher from './ViewTeacher';
 import ViewClass from './ViewClass';

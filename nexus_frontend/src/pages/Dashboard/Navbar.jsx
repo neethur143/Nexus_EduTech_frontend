@@ -36,17 +36,7 @@ function Navbar() {
                 </a> */}
               </li>
             </ul>
-            <form className="d-flex ms-auto text-white">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-light" type="submit">
-                Search
-              </button>
-            </form>
+           
             <ul className="navbar-nav ms-auto text-white">
               <li className="nav-item">
                 <a className="nav-link" href="#">
@@ -76,13 +66,12 @@ function Navbar() {
                 >
                   <li>
                     <a className="dropdown-item text-white" href="#">
-                      Profile
+                    <i  /><span><Link to="/" className="menu-item">Profile</Link></span>
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item text-white" href="#">
-                      Logout
-                    </a>
+                  
+                    <a href="#" className="dropdown-item text-white"><i  /><span><Link to="/" className="menu-item">Logout</Link></span></a>
                   </li>
                 </ul>
               </li>

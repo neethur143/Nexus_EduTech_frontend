@@ -5,7 +5,10 @@ const ViewTeacher = () => {
   const [teachers, setTeachers] = useState([]);
   const dummyTable = [
     { standard: '1', section: 'A', classId: '101' },
-    { standard: '1', section: 'B', classId: '102' },
+    { standard: '1', section: 'B', classId: '102' },  
+    { standard: '1', section: 'C', classId: '103' },
+    { standard: '1', section: 'D', classId: '104' },
+
     // ... other standards and sections
   ];
 

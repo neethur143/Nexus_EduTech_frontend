@@ -6,6 +6,7 @@ const ViewAttendance = () => {
   const [attendanceData, setAttendanceData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   useEffect(() => {
     if (isSubmitted && teacherId) {
@@ -33,28 +34,33 @@ const ViewAttendance = () => {
 
   const handleTeacherIdChange = (event) => {
     setTeacherId(event.target.value);
+    setIsInvalid(false); // Reset validation when input changes
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (teacherId) {
       setIsSubmitted(true);
+    } else {
+      setIsInvalid(true); // Set validation if teacherId is empty
     }
   };
 
   return (
     <div className="container mt-5">
       <h2>View Attendance</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={isInvalid ? 'was-validated' : ''}>
         <div className="mb-3">
           <label htmlFor="teacherId" className="form-label">Enter Teacher ID:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${isInvalid ? 'is-invalid' : ''}`}
             id="teacherId"
             value={teacherId}
             onChange={handleTeacherIdChange}
+          
           />
+          <div className="invalid-feedback">Please enter the Teacher ID.</div>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

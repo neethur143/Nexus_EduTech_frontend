@@ -20,7 +20,28 @@ const AddStudent = () => {
   const dummyData = [
     { standard: '1', section: 'A', classId: '101' },
     { standard: '1', section: 'B', classId: '102' },
-    // ... other standards and sections
+    { standard: '1', section: 'C', classId: '103' },
+    { standard: '1', section: 'D', classId: '104' },
+    { standard: '2', section: 'A', classId: '201' },
+    { standard: '2', section: 'B', classId: '202' },
+    { standard: '2', section: 'C', classId: '203' },
+    { standard: '2', section: 'D', classId: '204' },
+    { standard: '3', section: 'A', classId: '301' },
+    { standard: '3', section: 'B', classId: '302' },
+    { standard: '3', section: 'C', classId: '303' },
+    { standard: '3', section: 'D', classId: '304' },
+    { standard: '4', section: 'A', classId: '401' },
+    { standard: '4', section: 'B', classId: '402' },
+    { standard: '4', section: 'C', classId: '403' },
+    { standard: '4', section: 'D', classId: '404' },
+    { standard: '5', section: 'A', classId: '501' },
+    { standard: '5', section: 'B', classId: '502' },
+    { standard: '5', section: 'C', classId: '503' },
+    { standard: '5', section: 'D', classId: '504' },
+    { standard: '6', section: 'A', classId: '601' },
+    { standard: '6', section: 'B', classId: '602' },
+    { standard: '6', section: 'C', classId: '603' },
+    { standard: '6', section: 'D', classId: '604' },   
   ];
 
   const handleDropdownChange = (event) => {
@@ -148,7 +169,6 @@ const AddStudent = () => {
                     name="studentId"
                     value={studentDetails.studentId}
                     onChange={handleDropdownChange}
-                 
                   />
                   <span className="text-danger">{errors.studentId}</span>
                 </div>
@@ -161,7 +181,6 @@ const AddStudent = () => {
                     name="fullName"
                     value={studentDetails.fullName}
                     onChange={handleDropdownChange}
-                
                   />
                   <span className="text-danger">{errors.fullName}</span>
                 </div>
@@ -174,7 +193,6 @@ const AddStudent = () => {
                     name="registerNo"
                     value={studentDetails.registerNo}
                     onChange={handleDropdownChange}
-               
                   />
                   <span className="text-danger">{errors.registerNo}</span>
                 </div>
@@ -186,7 +204,6 @@ const AddStudent = () => {
                     name="gender"
                     value={studentDetails.gender}
                     onChange={handleDropdownChange}
-                
                   >
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
@@ -204,7 +221,8 @@ const AddStudent = () => {
                     name="dateOfBirth"
                     value={studentDetails.dateOfBirth}
                     onChange={handleDropdownChange}
-              
+                    max="2003-12-31"
+                    min="1990-01-01"
                   />
                   <span className="text-danger">{errors.dateOfBirth}</span>
                 </div>
@@ -216,7 +234,6 @@ const AddStudent = () => {
                     name="address"
                     value={studentDetails.address}
                     onChange={handleDropdownChange}
-                  
                   />
                   <span className="text-danger">{errors.address}</span>
                 </div>
@@ -229,7 +246,6 @@ const AddStudent = () => {
                     name="emailAddress"
                     value={studentDetails.emailAddress}
                     onChange={handleDropdownChange}
-                
                   />
                   <span className="text-danger">{errors.emailAddress}</span>
                 </div>
@@ -242,7 +258,6 @@ const AddStudent = () => {
                     name="standard"
                     value={studentDetails.standard}
                     onChange={handleDropdownChange}
-                  
                   >
                     <option value="">Select Standard</option>
                     {Array.from({ length: 10 }, (_, i) => (
@@ -259,7 +274,6 @@ const AddStudent = () => {
                     name="section"
                     value={studentDetails.section}
                     onChange={handleDropdownChange}
-                   
                   >
                     <option value="">Select Section</option>
                     <option value="A">A</option>
