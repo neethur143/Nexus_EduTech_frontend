@@ -16,6 +16,8 @@ const AddStudent = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
+
 
   const dummyData = [
     { standard: '1', section: 'A', classId: '101' },
@@ -113,13 +115,15 @@ const AddStudent = () => {
       email: studentDetails.emailAddress
     };
 
+    
     try {
       const response = await axios.post('http://localhost:5011/api/Student/AddStudent', payload, {
         headers: { 'Content-Type': 'application/json' }
       });
 
       if (response.status === 200) {
-        alert('Student Added Successfully');
+        // Set success message
+        setSuccessMessage('Student Added Successfully');
       } else {
         throw new Error('Error adding student');
       }
@@ -127,7 +131,6 @@ const AddStudent = () => {
       console.error('Error submitting form:', error);
       alert('An error occurred while adding the student');
     }
-
     // Reset form fields and errors after submission
     setStudentDetails({
       studentId: '',
@@ -292,6 +295,11 @@ const AddStudent = () => {
           </div>
         </div>
       </div>
+   {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
     </div>
   );
 };

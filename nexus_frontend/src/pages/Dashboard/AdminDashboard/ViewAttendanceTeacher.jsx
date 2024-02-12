@@ -61,24 +61,25 @@ const ViewAttendance = () => {
   return (
     <div className="container mt-5">
       <h2>View Attendance</h2>
-      <form onSubmit={handleSubmit} className={isInvalid ? 'was-validated' : ''}>
-        <div className="mb-3">
-          <label htmlFor="teacherId" className="form-label">Select Teacher:</label>
-          <select
-            className="form-control"
-            id="teacherId"
-            value={teacherId}
-            onChange={handleTeacherIdChange}
-          >
-            <option value="">Select a Teacher</option>
-            {teachers.map((teacher) => (
-              <option key={teacher.teacherId} value={teacher.teacherId}>
-                {teacher.name}
-              </option>
-            ))}
-          </select>
-          <div className="invalid-feedback">Please select a teacher.</div>
-        </div>
+      <form onSubmit={handleSubmit} className={isInvalid ? '' : ''}>
+      <div className="mb-3">
+  <label htmlFor="teacherId" className="form-label">Select Teacher:</label>
+  <select
+    className={`form-control ${isInvalid ? 'is-invalid' : ''}`}
+    id="teacherId"
+    value={teacherId}
+    onChange={handleTeacherIdChange}
+  >
+    <option value="">Select a Teacher</option>
+    {teachers.map((teacher) => (
+      <option key={teacher.teacherId} value={teacher.teacherId}>
+        {teacher.name}
+      </option>
+    ))}
+  </select>
+  <div className="invalid-feedback">Please select a teacher.</div>
+</div>
+
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       {isLoading && <p>Loading...</p>}

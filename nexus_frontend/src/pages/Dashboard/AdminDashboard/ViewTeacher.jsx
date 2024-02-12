@@ -14,7 +14,7 @@ const ViewTeacher = () => {
     email: '',
     classId: ''
   });
-
+  const [message, setMessage] = useState('');
   const dummyTable = [
     { standard: '1', section: 'A', classId: '101' },
     { standard: '1', section: 'B', classId: '102' },
@@ -37,7 +37,7 @@ const ViewTeacher = () => {
       setTeachers(response.data);
     } catch (error) {
       console.error('Error fetching teachers:', error);
-      alert('An error occurred while fetching teachers');
+      setMessage('An error occurred while fetching teachers');
     }
   };
 
@@ -46,11 +46,11 @@ const ViewTeacher = () => {
       const response = await axios.delete(`http://localhost:5011/api/Teacher/Delete/${teacherId}`);
       if (response.status === 200) {
         setTeachers(teachers.filter(teacher => teacher.teacherId !== teacherId));
-        alert('Teacher deleted successfully');
+        setMessage('Teacher deleted successfully');
       }
     } catch (error) {
       console.error('Error deleting teacher:', error);
-      alert('An error occurred while deleting the teacher');
+      setMessage('An error occurred while deleting the teacher');
     }
   };
 
@@ -104,17 +104,18 @@ const ViewTeacher = () => {
           email: '',
           classId: ''
         });
-        alert('Teacher details updated successfully');
+        setMessage('Teacher details updated successfully');
       }
     } catch (error) {
       console.error('Error updating teacher:', error);
-      alert('Failed to update teacher details');
+      setMessage('Failed to update teacher details');
     }
   };
 
   return (
     <div className="container">
       <h2>View Teachers</h2>
+      {message && <div className="alert alert-info">{message}</div>}
       <table className="table table-striped">
         <thead>
           <tr>

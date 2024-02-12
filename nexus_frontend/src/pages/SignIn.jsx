@@ -170,7 +170,7 @@ function SignIn() {
               </form>
 
               <div className='d-flex justify-content-between'>
-              <a className="small text-muted" href="#!"><Link to='/forgotpassword'>Forgot password?</Link></a>
+              <a href="#!"><Link to='/forgotpassword' className="large text-black" >Forgot password?</Link></a>
                 <Link to="/signup" className="large text-black">New User? Sign Up Here</Link>
               </div>
             </div>

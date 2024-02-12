@@ -3,13 +3,15 @@ import axios from 'axios';
 
 const AddAttendanceTeacher = () => {
   const [teachers, setTeachers] = useState([]);
-  const [attendance, setAttendance] = useState(teachers.map((teacher) => ({ teacherId: teacher.teacherId, status: 'absent' })));
+  const [attendance, setAttendance] = useState([]);
+  const [message, setMessage] = useState('');
   useEffect(() => {
-    // Fetch teacher data from the server when the component mounts
     const fetchTeachers = async () => {
       try {
         const response = await axios.get('http://localhost:5011/api/Teacher/GetAll');
         setTeachers(response.data);
+        // Initialize attendance state with all teachers marked as absent
+        setAttendance(response.data.map(teacher => ({ teacherId: teacher.teacherId, status: 'absent' })));
       } catch (error) {
         console.error('Error fetching teachers:', error);
       }
@@ -17,18 +19,20 @@ const AddAttendanceTeacher = () => {
 
     fetchTeachers();
   }, []);
-  const handleCheckboxChange = (event, teacherId) => {
-    const { checked } = event.target;
-    const status = checked ? 'present' : 'absent';
-  console.log(status);
-    // Directly update attendance state with the determined status
-    setAttendance((prevAttendance) => {
-      return [
-        ...prevAttendance.filter((item) => item.teacherId !== teacherId), // Remove any existing entry for the teacher
-        { teacherId, status }, // Add the new entry with the calculated status
-      ];
+
+  const handleCheckboxChange = (event, teacherId, status) => {
+    // Update the attendance state based on the checkbox status
+    setAttendance(prevAttendance => {
+      return prevAttendance.map(item => {
+        if (item.teacherId === teacherId) {
+          return { ...item, status: status };
+        } else {
+          return item;
+        }
+      });
     });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -40,18 +44,19 @@ const AddAttendanceTeacher = () => {
         });
       }
 
-      alert('Attendance submitted successfully');
+      setMessage('Attendance submitted successfully');
       // Reset the attendance state after submission
       setAttendance([]);
     } catch (error) {
       console.error('Error submitting attendance:', error);
-      alert('An error occurred while submitting attendance');
+      setMessage('An error occurred while submitting attendance');
     }
   };
 
   return (
     <div className="container mt-5">
       <h2>Add Teacher Attendance</h2>
+      {message && <div className="alert alert-info">{message}</div>}
       <form onSubmit={handleSubmit}>
         <table className="table">
           <thead>
@@ -68,21 +73,28 @@ const AddAttendanceTeacher = () => {
                   <td>{teacher.teacherId}</td>
                   <td>{teacher.name}</td>
                   <td>
-                    <div className="form-check">
+                    <div className="form-check form-check-inline">
                       <input
                         type="checkbox"
                         className="form-check-input"
                         id={`teacher_${teacher.teacherId}_present`}
-                        name={`teacher_${teacher.teacherId}_present`}
-               
-                   
-                        checked={attendance.some(item => item.teacherId === teacher.teacherId && item.status === 'present')}
-                       
-                
-                        onChange={(event) => handleCheckboxChange(event, teacher.teacherId)}
+                        checked={attendance.some(item => item.teacherId === teacher.teacherId && item.status === 'Present')}
+                        onChange={(event) => handleCheckboxChange(event, teacher.teacherId, 'Present')}
                       />
                       <label className="form-check-label" htmlFor={`teacher_${teacher.teacherId}_present`}>
                         Present
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={`teacher_${teacher.teacherId}_absent`}
+                        checked={attendance.some(item => item.teacherId === teacher.teacherId && item.status === 'absent')}
+                        onChange={(event) => handleCheckboxChange(event, teacher.teacherId, 'absent')}
+                      />
+                      <label className="form-check-label" htmlFor={`teacher_${teacher.teacherId}_absent`}>
+                        Absent
                       </label>
                     </div>
                   </td>

@@ -7,6 +7,8 @@ const ViewAttendanceByMonth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [teacherAttendance, setTeacherAttendance] = useState([]);
+  const [isDropdownTouched, setIsDropdownTouched] = useState(false);
+  const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
   useEffect(() => {
     if (isSubmitted && selectedMonth) {
@@ -28,23 +30,27 @@ const ViewAttendanceByMonth = () => {
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
+    setIsDropdownTouched(true); // Set the flag to true when the dropdown value changes
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedMonth) {
       setIsSubmitted(true);
+      setIsDropdownInvalid(false); // Clear invalid state if a month is selected
+    } else {
+      setIsDropdownInvalid(true); // Set invalid state if no month is selected
     }
   };
 
   useEffect(() => {
-    if (attendanceData.length > 0) {
+    if (attendanceData.length >  0) {
       const teachers = {};
       attendanceData.forEach((attendance) => {
         if (!teachers[attendance.teacherId]) {
           teachers[attendance.teacherId] = {
-            present: 0,
-            absent: 0
+            present:  0,
+            absent:  0
           };
         }
         if (attendance.status.toLowerCase() === 'present') {
@@ -56,7 +62,7 @@ const ViewAttendanceByMonth = () => {
       const formattedAttendance = Object.keys(teachers).map((teacherId) => {
         const { present, absent } = teachers[teacherId];
         const totalDays = present + absent;
-        const percentage = (present / totalDays) * 100 || 0;
+        const percentage = (present / totalDays) *  100 ||  0;
         return {
           teacherId,
           present,
@@ -75,11 +81,11 @@ const ViewAttendanceByMonth = () => {
         <div className="mb-3">
           <label htmlFor="selectedMonth" className="form-label">Select Month:</label>
           <select
-            className="form-select"
+            className={`form-select ${isDropdownInvalid  ? 'is-invalid' : ''}`}
             id="selectedMonth"
             value={selectedMonth}
             onChange={handleMonthChange}
-            required
+            
           >
             <option value="">Select Month</option>
             <option value="1">January</option>
@@ -100,7 +106,7 @@ const ViewAttendanceByMonth = () => {
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       {isLoading && <p>Loading...</p>}
-      {isSubmitted && teacherAttendance.length > 0 && (
+      {isSubmitted && teacherAttendance.length >  0 && (
         <table className="table">
           <thead>
             <tr>

@@ -33,8 +33,8 @@ const ViewAttendanceTeacher = () => {
     }, [attendanceData]);
 
     return (
-        <div>
-            <h2>Teacher Attendance</h2>
+        <div className='text-center container mt-5'><br />
+            <h2 className='text-center'>Teacher Attendance</h2><br />
             <p>Total Working Days: {attendanceData.totalWorkingDays || 0}</p>
             <p>No. of Present: {attendanceData.noOfPresent || 0}</p>
             <p>No. of Absent: {attendanceData.noOfAbsent || 0}</p>

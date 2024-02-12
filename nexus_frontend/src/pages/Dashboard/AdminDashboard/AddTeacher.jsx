@@ -25,7 +25,7 @@ const AddTeacher = () => {
     standard: '',
     section: ''
   });
-
+  const [successMessage, setSuccessMessage] = useState('');
   const classes = [
     { classId: 101, standard: '1', section: 'A' },
     { classId: 102, standard: '1', section: 'B' },
@@ -95,7 +95,7 @@ const AddTeacher = () => {
       });
 
       if (response.status === 200) {
-        alert('Teacher Added Successfully');
+        setSuccessMessage('Teacher Added Successfully');
         // Reset form fields after successful submission
         setTeacherDetails({
           teacherId: '',
@@ -282,7 +282,12 @@ const AddTeacher = () => {
         </div>
       </div>
     </div>
-  </div>
+    {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
+    </div>
   );
 };
 

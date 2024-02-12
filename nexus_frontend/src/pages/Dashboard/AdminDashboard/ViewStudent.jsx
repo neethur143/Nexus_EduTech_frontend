@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
- 
+
 const StudentDetails = () => {
   const [students, setStudents] = useState([]);
   const [editableStudent, setEditableStudent] = useState(null);
@@ -15,6 +15,8 @@ const StudentDetails = () => {
     address: '',
     email: ''
   });
+  const [message, setMessage] = useState('');
+
   const classes = [
     { classId: 101, standard: '1', section: 'A' },
     { classId: 102, standard: '1', section: 'B' },
@@ -33,11 +35,11 @@ const StudentDetails = () => {
     { classId: 403, standard: '4', section: 'C' },
     { classId: 404, standard: '4', section: 'D' },
   ];
- 
+
   useEffect(() => {
     fetchStudents();
   }, []);
- 
+
   const fetchStudents = async () => {
     try {
       const response = await axios.get('http://localhost:5011/api/Student/GetAll');
@@ -46,42 +48,40 @@ const StudentDetails = () => {
       console.error('Error fetching students:', error);
     }
   };
- 
+
   const handleEditStudent = (studentId) => {
     const studentToEdit = students.find(student => student.studentId === studentId);
     setEditableStudent(studentToEdit);
-    setFormData({
-      ...studentToEdit
-    });
+    setFormData({ ...studentToEdit });
     // Open modal here
   };
- 
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
- 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const { standard, section, ...restFormData } = formData;
       const selectedClass = classes.find(c => c.standard === standard && c.section === section);
       if (!selectedClass) {
-        alert('Please select a valid standard and section.');
+        setMessage('Please select a valid standard and section.');
         return;
       }
       const { classId } = selectedClass;
- 
+
       // Format date to "yyyy-MM-dd" before sending it to the backend
       const formattedDate = formData.dob.split('T')[0];
- 
+
       const formDataWithClassId = {
         ...restFormData,
         classId,
         dob: formattedDate,
         registrationNumber: restFormData.registrationNumber // Include registration number
       };
- 
+
       const response = await axios.put('http://localhost:5011/api/Student/UpdateStudent', formDataWithClassId);
       console.log(formDataWithClassId);
       const updatedStudent = response.data;
@@ -101,30 +101,31 @@ const StudentDetails = () => {
         address: '',
         email: ''
       });
-      alert('Student details updated successfully!');
+      setMessage('Student details updated successfully!');
     } catch (error) {
       console.error('Error updating student:', error);
-      alert('Failed to update student details!');
+      setMessage('Failed to update student details!');
     }
   };
- 
+
   const handleDeleteStudent = async (studentId) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
         await axios.delete(`http://localhost:5011/api/Student/DeleteStudent/${studentId}`);
         const updatedStudents = students.filter(student => student.studentId !== studentId);
         setStudents(updatedStudents);
-        alert('Student deleted successfully!');
+        setMessage('Student deleted successfully!');
       } catch (error) {
         console.error('Error deleting student:', error);
-        alert('Failed to delete student!');
+        setMessage('Failed to delete student!');
       }
     }
   };
- 
+
   return (
     <div>
       <h2>Student Details</h2>
+      {message && <div className="alert alert-info">{message}</div>}
       <table className="table table-bordered table-hover table-responsive">
         <thead>
           <tr>
@@ -162,7 +163,7 @@ const StudentDetails = () => {
                     onChange={handleChange}
                   /> : student.name}
               </td>
- 
+
               <td>
                 {editableStudent && editableStudent.studentId === student.studentId ? (
                   <select
@@ -176,7 +177,7 @@ const StudentDetails = () => {
                   </select>
                 ) : student.gender}
               </td>
- 
+
               <td>
                 {editableStudent && editableStudent.studentId === student.studentId ?
                   <select
@@ -204,14 +205,13 @@ const StudentDetails = () => {
                   </select> : student.section}
               </td>
               <td>
-              {editableStudent && editableStudent.studentId === student.studentId ?
-  <input
-    type="date"
-    name="dob"
-    value={formData.dob}
-    onChange={handleChange}
-  /> :  
-  new Date(student.dob).toLocaleDateString('en-GB')}
+                {editableStudent && editableStudent.studentId === student.studentId ?
+                  <input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                  /> : new Date(student.dob).toLocaleDateString('en-GB')}
               </td>
               <td>
                 {editableStudent && editableStudent.studentId === student.studentId ?
@@ -264,5 +264,5 @@ const StudentDetails = () => {
     </div>
   );
 };
- 
+
 export default StudentDetails;

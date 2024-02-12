@@ -12,8 +12,10 @@ const ScheduleClass = () => {
     ];
 
     const dummySubject = [
-        { subjectId: 11, Subject: 'English' },
-        { subjectId: 12, Subject: 'Maths' },
+        { subjectId: 10, Subject: 'English' },
+        { subjectId: 11, Subject: 'Maths' },
+        { subjectId: 12, Subject: 'Biology' },
+        { subjectId: 13, Subject: 'Evs' },
     ];
 
     const [standard, setStandard] = useState('');

@@ -1,52 +1,66 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
+import { Container, Card, Button, Form } from 'react-bootstrap';
 
 function ForgotPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [newPass, setNewPass] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
-  const [emailError, setEmailError] = useState('Please enter an email address.');
+  const [newpass, setNewPass] = useState('');
+  const [Confirmpass, setConfirmPass] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(String(email).toLowerCase());
   };
 
-  const validatePasswordMatch = (newPass, confirmPass) => {
-    return newPass === confirmPass;
+  const validatePasswordMatch = (newpass, Confirmpass) => {
+    return newpass === Confirmpass;
   };
 
   const validatePasswordLength = (password) => {
-    return password.length >=   8;
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (validateEmail(e.target.value)) {
-      setEmailError('');
+    if (password.length < 8) {
+      return false;
     }
+    return true;
   };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     let isValid = true;
 
-    if (!validateEmail(email)) {
+    // Validate email
+    if (!email) {
+      setEmailError('Please enter an email address.');
+      isValid = false;
+    } else if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address.');
       isValid = false;
     } else {
       setEmailError('');
     }
 
-    if (!validatePasswordLength(newPass)) {
-      setPasswordError('Password must be at least   8 characters long.');
+    // Validate new password
+    if (!newpass) {
+      setPasswordError('Please enter a new password.');
       isValid = false;
-    } else if (!validatePasswordMatch(newPass, confirmPass)) {
+    } else if (!validatePasswordLength(newpass)) {
+      setPasswordError('Password must be at least 8 characters long.');
+      isValid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    // Validate confirm password
+    if (!Confirmpass) {
+      setPasswordError('Please confirm your password.');
+      isValid = false;
+    } else if (!validatePasswordMatch(newpass, Confirmpass)) {
       setPasswordError('The passwords do not match.');
       isValid = false;
     } else {
@@ -55,13 +69,13 @@ function ForgotPassword() {
 
     if (isValid) {
       axios
-        .put(`http://localhost:5011/api/PasswordRecovery/Verify/${email}/${newPass}/${confirmPass}`)
+        .put(`http://localhost:5011/api/PasswordRecovery/Verify/${email}/${newpass}/${Confirmpass}`)
         .then((response) => {
-          if (response.data.success) {
-            alert('Password changed successfully');
-            navigate('/login');
+          if (response.status === 200 && response.data === "Password Changed") {
+            setSuccessMessage('Password changed successfully');
+            setTimeout(() => navigate('/signin'), 3000);
           } else {
-            setEmailError('Email not found.');
+            setEmailError('Email not found or an error occurred.');
           }
         })
         .catch((err) => {
@@ -75,21 +89,21 @@ function ForgotPassword() {
     <Container className="my-5 w-50">
       <Card>
         <Card.Body>
-          <h5 className="text-center mb-4">Forgot Password</h5>
+        <h4 className="text-center mb-4" style={{ color: '#c02942' }}>Forgot Password</h4>
+          {successMessage && <p className="text-success text-center">{successMessage}</p>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange}  />
+              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
               {emailError && <Form.Text className="text-danger">{emailError}</Form.Text>}
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>New Password</Form.Label>
-              <Form.Control type="password" placeholder="New Password" value={newPass} onChange={(e) => setNewPass(e.target.value)} />
-              {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
+              <Form.Control type="password" placeholder="New Password" value={newpass} onChange={(e) => setNewPass(e.target.value)} />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control type="password" placeholder="Confirm Password" value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)}  />
+              <Form.Control type="password" placeholder="Confirm Password" value={Confirmpass} onChange={(e) => setConfirmPass(e.target.value)} />
               {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
             </Form.Group>
             <Button variant="dark" type="submit">Update</Button>

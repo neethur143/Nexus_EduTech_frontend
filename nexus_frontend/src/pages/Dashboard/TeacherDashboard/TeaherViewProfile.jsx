@@ -25,8 +25,8 @@ const ViewTeacherDetail = () => {
     return new Intl.DateTimeFormat('en-GB').format(new Date(date));
   }
   return (
-    <div>
-      <h2>Teacher Details</h2>
+    <div><br />
+      <h2 className='text-center'>Teacher Details</h2><br />
       {isLoading ? (
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
