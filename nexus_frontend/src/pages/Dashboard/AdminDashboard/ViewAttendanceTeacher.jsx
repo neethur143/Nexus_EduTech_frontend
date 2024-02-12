@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ViewAttendance = () => {
+  const [teachers, setTeachers] = useState([]);
   const [teacherId, setTeacherId] = useState('');
   const [attendanceData, setAttendanceData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -9,12 +10,21 @@ const ViewAttendance = () => {
   const [isInvalid, setIsInvalid] = useState(false);
 
   useEffect(() => {
-    if (isSubmitted && teacherId) {
-      fetchAttendanceData();
+    fetchTeachers();
+  }, []);
+
+  const fetchTeachers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5011/api/Teacher/GetAll');
+      setTeachers(response.data);
+    } catch (error) {
+      console.error('Error fetching teachers:', error);
     }
-  }, [isSubmitted, teacherId]);
+  };
 
   const fetchAttendanceData = async () => {
+    if (!teacherId) return;
+
     try {
       setIsLoading(true);
       const response = await axios.get(`http://localhost:5011/api/TeacherAttendence/ GetTeacherAttendenceById/${teacherId}`);
@@ -26,12 +36,6 @@ const ViewAttendance = () => {
     }
   };
 
-  const calculateAttendancePercentage = () => {
-    if (!attendanceData) return 0;
-    const { totalWorkingDays, noOfPresent } = attendanceData;
-    return ((noOfPresent / totalWorkingDays) * 100).toFixed(2);
-  };
-
   const handleTeacherIdChange = (event) => {
     setTeacherId(event.target.value);
     setIsInvalid(false); // Reset validation when input changes
@@ -41,31 +45,46 @@ const ViewAttendance = () => {
     event.preventDefault();
     if (teacherId) {
       setIsSubmitted(true);
+      fetchAttendanceData();
     } else {
       setIsInvalid(true); // Set validation if teacherId is empty
     }
   };
+
+ const calculateAttendancePercentage = () => {
+    if (!attendanceData) return 0;
+    const { totalWorkingDays, noOfPresent } = attendanceData;
+    return ((noOfPresent / totalWorkingDays) * 100).toFixed(2);
+  };
+ 
 
   return (
     <div className="container mt-5">
       <h2>View Attendance</h2>
       <form onSubmit={handleSubmit} className={isInvalid ? 'was-validated' : ''}>
         <div className="mb-3">
-          <label htmlFor="teacherId" className="form-label">Enter Teacher ID:</label>
-          <input
-            type="text"
-            className={`form-control ${isInvalid ? 'is-invalid' : ''}`}
+          <label htmlFor="teacherId" className="form-label">Select Teacher:</label>
+          <select
+            className="form-control"
             id="teacherId"
             value={teacherId}
             onChange={handleTeacherIdChange}
-          
-          />
-          <div className="invalid-feedback">Please enter the Teacher ID.</div>
+          >
+            <option value="">Select a Teacher</option>
+            {teachers.map((teacher) => (
+              <option key={teacher.teacherId} value={teacher.teacherId}>
+                {teacher.name}
+              </option>
+            ))}
+          </select>
+          <div className="invalid-feedback">Please select a teacher.</div>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       {isLoading && <p>Loading...</p>}
       {isSubmitted && attendanceData && (
+        <div>
+          <h3>Attendance for Teacher: {teachers.find(t => t.teacherId === teacherId)?.name}</h3>
         <table className="table">
           <thead>
             <tr>
@@ -84,6 +103,7 @@ const ViewAttendance = () => {
             </tr>
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

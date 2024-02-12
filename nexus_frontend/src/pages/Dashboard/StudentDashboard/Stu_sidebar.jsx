@@ -2,122 +2,67 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function StudentSidebar() {
-    const sidebarStyle = {
-        backgroundColor: 'black', // Set background color to black
-        color: 'white', // Set text color to white
-        padding: '20px' // Add padding to the sidebar
-    };
-
-    const menuItemStyle = {
-        fontSize: '18px', // Set font size to 18px
-        marginBottom: '10px' // Add margin bottom to each menu item
-    };
-
     return (
-        <div style={sidebarStyle} className="main-menu menu-dark menu-fixed menu-shadow menu-border menu-accordion">
-            <div className="main-menu-content">
-                <ul id="main-menu-navigation" data-menu="menu-navigation" className="navigation navigation-main">
-                    <li className="nav-item">
-                        <Link to="/student" style={menuItemStyle}>
-                            <i className="icon-home3"></i>
-                            <span data-i18n="nav.dash.main" className="menu-title">Dashboard</span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <a href="#" style={menuItemStyle}>
-                            <i className="icon-stack-2"></i>
-                            <span data-i18n="nav.page_layouts.main" className="menu-title">Student</span>
-                        </a>
-                        <ul className="menu-content">
-                            <li>
-                                <Link to="student/viewStudentProfile" style={menuItemStyle} className="menu-item">View Profile</Link>
-                            </li>
+        <nav
+            id="sidebarMenu"
+            className="collapse d-lg-block sidebar collapse bg-dark text-light"
+            style={{ marginTop: '56px', marginLeft: '12px', position: 'fixed', top:  0, left:  0, right:  0, zIndex:  100 }}
+        >
+            <div className="position-fixed">
+                <div className="list-group list-group-flush mx-4 border border-dark mw-100">
+                    <Link to="/student" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i className="fas fa-tachometer-alt fa-fw"></i> <span className="menu-title">Dashboard</span>
+                    </Link>
+                </div>
+                <br />
+                <div className="justify-content-center align-items-center">
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle mx-5 mt-3 bg-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Student
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to="student/viewStudentProfile" className="dropdown-item">View Profile</Link></li>
                         </ul>
-                    </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Exam
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="student/viewExam"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Exam
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-                <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                  Result
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="student/viewResult"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Result
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                    Attendence
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="sviewAttendanceList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Attendance
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            
-            
-              <li class=" nav-item">
-                <a href="#">
-                  <i class="icon-stack-2"></i>
-                  <span data-i18n="nav.page_layouts.main" class="menu-title">
-                   View Class Schedule
-                  </span>
-                </a>
-                <ul class="menu-content">
-                  <li>
-                    <Link
-                      to="student/viewTimeTableList"
-                      data-i18n="nav.page_layouts.1_column"
-                      class="menu-item"
-                    >
-                      View Time-Table
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-             
-            </ul>
-          </div>
-
-        </div>
+                    </div>
+                    <br />
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle mx-5 mt-3 bg-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Exam
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to="student/viewExam" className="dropdown-item">View Exam</Link></li>
+                        </ul>
+                    </div>
+                    <br />
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle mx-5 mt-3 bg-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Result
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to="student/viewResult" className="dropdown-item">View Result</Link></li>
+                        </ul>
+                    </div>
+                    <br />
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle mx-5 mt-3 bg-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Attendance
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to="student/viewAttendanceList" className="dropdown-item">View Attendance</Link></li>
+                        </ul>
+                    </div>
+                    <br />
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle mx-5 mt-3 bg-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Class Schedule
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to="student/viewTimeTableList" className="dropdown-item">View Time-Table</Link></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
     );
 }
 

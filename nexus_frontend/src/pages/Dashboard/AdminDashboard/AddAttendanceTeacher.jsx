@@ -20,7 +20,7 @@ const AddAttendanceTeacher = () => {
   const handleCheckboxChange = (event, teacherId) => {
     const { checked } = event.target;
     const status = checked ? 'present' : 'absent';
-  
+  console.log(status);
     // Directly update attendance state with the determined status
     setAttendance((prevAttendance) => {
       return [
@@ -77,7 +77,8 @@ const AddAttendanceTeacher = () => {
                
                    
                         checked={attendance.some(item => item.teacherId === teacher.teacherId && item.status === 'present')}
-                  
+                       
+                
                         onChange={(event) => handleCheckboxChange(event, teacher.teacherId)}
                       />
                       <label className="form-check-label" htmlFor={`teacher_${teacher.teacherId}_present`}>

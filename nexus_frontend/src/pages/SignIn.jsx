@@ -4,13 +4,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 // import { StudentContext } from './StudentContext';
 import { StudentContext } from './Dashboard/StudentDashboard/StudentContext'; // Make sure to import the context from the correct path
+import { TeacherContext } from './Dashboard/TeacherDashboard/TeacherContext';
 
 function SignIn() {
   const navigate = useNavigate();
   const [user, setUser] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({ username: "", password: "" });
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-  const { setLoggedInStudentId } = useContext(StudentContext); // Use the context to set the logged-in student ID
+ const {setLoggedInStudentId} = useContext(StudentContext); // Use the context to set the logged-in student ID
+  const {setLoggedInTeacherId}  = useContext(TeacherContext); // Use the context to set the logged-in student ID
 
   const validateForm = () => {
     let isValid = true;
@@ -37,7 +39,7 @@ function SignIn() {
         .post("http://localhost:5011/api/User/Login", user)
         .then((response) => {
           const validUser = response.data;
-          if (validUser.role === "student") {
+          if (validUser.role === "Student") {
             // Fetch user ID from the API
             axios.get("http://localhost:5011/api/User/GetAllUser")
               .then((response) => {
@@ -45,7 +47,7 @@ function SignIn() {
                 if (student) {
                   const { id } = student;
                   
-                  sessionStorage.setItem("uid", id);
+                  sessionStorage.setItem("uid",id);
                   sessionStorage.setItem("token", validUser.token);
                   setLoggedInStudentId(id); // Store the logged-in student ID in the context
                   navigate("/student/viewStudentProfile"); // Redirect to the profile page
@@ -59,15 +61,48 @@ function SignIn() {
                 setInvalidCredentials(true);
                 window.alert("Error occurred. Please try again later.");
               });
-          } else {
+          }
+          else if(validUser.role === "Teacher"){
+            // Fetch user ID from the API
+            axios.get("http://localhost:5011/api/User/GetAllUser")
+              .then((response) => {
+                const teacher = response.data.find((user) => user.userName === validUser.username);
+                if (teacher) {
+                  const { id } = teacher;
+                  
+                  sessionStorage.setItem("uid",id);
+                  sessionStorage.setItem("token", validUser.token);
+                  setLoggedInTeacherId(id); 
+                  navigate("/teacher/viewProfile"); // Redirect to the profile page
+                } else {
+                  setInvalidCredentials(true);
+                  window.alert("User not found.");
+                }
+                
+              })
+              .catch((error) => {
+                // console.error("Error:", error);
+                setInvalidCredentials(true);
+                window.alert("Error occurred. Please try again later.");
+              });
+          }
+          else{
             sessionStorage.setItem("uid", validUser.username);
             sessionStorage.setItem("token", validUser.token);
-            if (validUser.role === "admin") {
+            if (validUser.role === "Admin") {
               navigate("/admin");
-            } else if (validUser.role === "teacher") {
-              navigate("/teacher");
-            }
           }
+        }
+          //  else {
+          //   sessionStorage.setItem("uid", validUser.username);
+          //   sessionStorage.setItem("token", validUser.token);
+          //   if (validUser.role === "Admin") {
+          //     navigate("/admin");
+          //   } else if (validUser.role === "Teacher") {
+              
+          //     navigate("/teacher");
+          //   }
+          // }
         })
         .catch((err) => {
           console.error("Error:", err);
@@ -135,7 +170,7 @@ function SignIn() {
               </form>
 
               <div className='d-flex justify-content-between'>
-                <Link to="/forgot-password" className="large text-muted">Forgot password?</Link>
+              <a className="small text-muted" href="#!"><Link to='/forgotpassword'>Forgot password?</Link></a>
                 <Link to="/signup" className="large text-black">New User? Sign Up Here</Link>
               </div>
             </div>

@@ -13,13 +13,11 @@ function StudentDashboard() {
   return (
     <div className="student-dashboard">
       <Navbar/>
-      <div className="student-main-content" style={{ marginTop: '60px' }}>
-        <div className="col-md-3">
-          <div className="sidebar-wrapper bg-primary text-white p-4">
-            <StudentSidebar/>
-          </div>
-        </div>
-        <div className="col-md-9">
+      <StudentSidebar/>
+      <section className="student-main-content" style={{ marginTop: '60px' }}>
+      <div className='row'>
+        <div className="col-md-3"></div>
+        <div className='col-md-9'>                            
           <div className="content-wrapper p-4">
             <Routes>
               <Route path="/student/viewStudentProfile" element={<ViewStudentDetail/>} />
@@ -30,7 +28,8 @@ function StudentDashboard() {
             </Routes>
           </div>
         </div>
-      </div>
+        </div>
+        </section>
     </div>
   );
 }

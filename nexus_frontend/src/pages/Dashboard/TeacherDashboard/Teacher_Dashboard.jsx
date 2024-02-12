@@ -5,6 +5,9 @@ import { Routes, Route } from 'react-router-dom';
 import AddMarks from './AddMark';
 import UpdateMarks from './UpdateMark';
 import ViewTimeTableTeacher from './ViewTimetableTeacher';
+import AddAttendanceStudent from './TakeAttendance';
+import ViewTeacherDetail from './TeaherViewProfile';
+import ViewAttendanceTeacher from './ViewTeacherAttendance';
 // import teacherTakeAttendance from './TakeAttendance';
 function TeacherDashboard() {
     return (
@@ -15,11 +18,13 @@ function TeacherDashboard() {
                 <TeacherSidebar />
                     <div className="container">
                     <Routes>
-          {/* <Route path="/takeAttendance" element={<teacherTakeAttendance/>} /> */}
+                    <Route path="/viewProfile" element={<ViewTeacherDetail/>} />
+          <Route path="/takeAttendance" element={<AddAttendanceStudent/>} />
+          <Route path="/viewattendance" element={<ViewAttendanceTeacher/>} />
           <Route path="/addmark" element={<AddMarks/>} />
           <Route path="/updatemark" element={<UpdateMarks/>} />
           <Route path="/viewtimetableteacher" element={<ViewTimeTableTeacher/>} />
-          
+        
           </Routes>            
                     </div>
                 </main>

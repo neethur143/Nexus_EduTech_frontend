@@ -39,7 +39,7 @@ const TeacherSidebar = () => {
                     </Link>
                 </li>
                 <li className="sidebar-item">
-                    <Link to="/teacher/viewNotice" className="sidebar-link" style={{ color: 'white' }}>
+                    <Link to="/teacher/viewattendance" className="sidebar-link" style={{ color: 'white' }}>
                         <i className="fas fa-clipboard-list sidebar-icon" style={{ color: 'white' }}></i>
                         View Attendance
                     </Link>

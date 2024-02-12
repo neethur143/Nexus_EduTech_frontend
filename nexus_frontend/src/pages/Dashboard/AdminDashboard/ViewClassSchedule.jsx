@@ -79,9 +79,9 @@ const ViewScheduleClass = () => {
                 <thead>
                     <tr>
                         <th>Class ID</th>
-                        <th>Teacher</th>
                         <th>Subject</th>
                         <th>Time</th>
+                        <th>Teacher</th>
                         <th>Date</th>
                         <th>Actions</th>
                     </tr>

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { StudentContext } from './StudentContext'; // Update the import path to match your actual location
 
 const ViewStudentDetail = () => {
-    const [student, setStudent] = useState(null);
+    const [student, getStudent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const { loggedInStudentId } = useContext(StudentContext); // Access the context value
 
@@ -13,7 +13,7 @@ const ViewStudentDetail = () => {
         const fetchStudentData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5011/api/Student/GetByStudentId/${loggedInStudentId}`);
-                setStudent(response.data);
+                getStudent(response.data);
                 setIsLoading(false); // Set loading to false after fetching data
             } catch (error) {
                 console.error('Error fetching student data:', error);
