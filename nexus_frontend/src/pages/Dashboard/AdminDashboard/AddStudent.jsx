@@ -124,6 +124,9 @@ const AddStudent = () => {
       if (response.status === 200) {
         // Set success message
         setSuccessMessage('Student Added Successfully');
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
       } else {
         throw new Error('Error adding student');
       }

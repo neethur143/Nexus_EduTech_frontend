@@ -6,6 +6,7 @@ const ViewExam = () => {
   const [editableExam, setEditableExam] = useState(null); // State to store the exam being edited
   const [standards, setStandards] = useState([]);
   const [sections, setSections] = useState([]);
+  const [message, setMessage] = useState('');
 
   // Dummy data for classes and subjects
   const classes = [
@@ -68,17 +69,20 @@ const ViewExam = () => {
     try {
       // Make sure all fields are filled
       if (!editableExam.examName || !editableExam.subjectId || !editableExam.classId || !editableExam.max_Mark) {
-        alert('Please fill in all fields.');
+        setMessage('Please fill in all fields.');
         return;
       }
 
       // Send updated exam data to the server
       await updateExam(editableExam);
-      alert('Exam updated successfully');
+      setMessage('Exam updated successfully');
       setEditableExam(null); // Clear the editable exam state
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
     } catch (error) {
       console.error('Error updating exam:', error);
-      alert('Failed to update exam. Please try again.');
+      setMessage('Failed to update exam. Please try again.');
     }
   };
 
@@ -101,14 +105,17 @@ const ViewExam = () => {
         .then((response) => {
           // Update exams state after successful deletion
           if (response.status === 200) {
-            alert('Exam Deleted');
+            setMessage('Exam Deleted');
+            setTimeout(() => {
+              setMessage('');
+            }, 2000);
             // Fetch updated list of exams
             setExams(exams.filter(exam => exam.examId !== examId));
           }
         })
         .catch((error) => {
           console.error('Error deleting exam:', error);
-          alert('An error occurred while deleting the exam');
+          setMessage('An error occurred while deleting the exam');
         });
     }
   };
@@ -122,6 +129,7 @@ const ViewExam = () => {
   return (
     <div className="container mt-5">
       <h2>View Exams</h2>
+      {message && <div className="alert alert-info">{message}</div>}
       <table className="table table-striped table-bordered">
         <thead>
           <tr>

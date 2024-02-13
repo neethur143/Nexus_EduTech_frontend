@@ -1,116 +1,112 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const UpdateMarks = () => {
-    const [studentId, setStudentId] = useState('');
-    const [examId, setExamId] = useState('');
-    const [mark, setMark] = useState('');
-    const [validationErrors, setValidationErrors] = useState({
-        examId: '',
-        studentId: '',
-        mark: ''
+  const [marks, setMarks] = useState([]);
+  const [editingMarkId, setEditingMarkId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Fetch all marks, exams, and students
+    Promise.all([
+      axios.get("http://localhost:5011/api/Mark/GetAllMarks"),
+      axios.get("http://localhost:5011/api/Exam/GetAll"),
+      axios.get("http://localhost:5011/api/Student/GetAll")
+    ]).then((responses) => {
+      const marksData = responses[0].data;
+      const examsData = responses[1].data;
+      const studentsData = responses[2].data;
+      
+      // Enrich marks data with exam names and student names
+      const enrichedMarks = marksData.map(mark => ({
+        ...mark,
+        examName: examsData.find(exam => exam.examId === mark.examId)?.examName,
+        studentName: studentsData.find(student => student.studentId === mark.studentId)?.name
+      }));
+      
+      setMarks(enrichedMarks);
+    }).catch((error) => {
+      console.error('Error fetching data:', error);
     });
+  }, []);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+  const handleEdit = (markId) => {
+    setEditingMarkId(markId);
+  };
 
-        // Clear previous validation errors
-        setValidationErrors({
-            examId: '',
-            studentId: '',
-            mark: ''
-        });
+  const handleSave = async (markId, newMark) => {
+    try {
+      // Find the mark being edited
+      const markToEdit = marks.find((mark) => mark.markId === markId);
 
-        let errors = {};
+      // Construct the payload with the required IDs and the new mark
+      const payload = {
+        markId: markId,
+        studentId: markToEdit.studentId,
+        examId: markToEdit.examId,
+        mark: newMark
+      };
 
-        // Validate if all fields are filled
-        if (!studentId) {
-            errors.studentId = 'Please fill in Student ID.';
-        }
+      await axios.put(`http://localhost:5011/api/Mark/UpdateMark/${markId}`, payload);
+      setSuccessMessage('Mark updated successfully');
+      setEditingMarkId(null); // Exit edit mode
+      setTimeout(() => window.location.reload(),  2000);
+    } catch (error) {
+      console.error('Error updating mark:', error);
+      setSuccessMessage('Failed to update mark. Please try again.');
+    }
+  };
 
-        if (!examId) {
-            errors.examId = 'Please fill in Exam ID.';
-        }
+  const handleCancel = () => {
+    setEditingMarkId(null); // Exit edit mode without saving
+  };
 
-        if (!mark) {
-            errors.mark = 'Please fill in Updated Mark.';
-        }
-
-        // Validate if exam ID and mark are numbers
-        if (isNaN(examId)) {
-            errors.examId = 'Please enter a valid number for Exam ID.';
-        }
-
-        if (isNaN(studentId)) {
-            errors.studentId = 'Please enter a valid number for Student ID.';
-        }
-
-        if (isNaN(mark)) {
-            errors.mark = 'Please enter a valid number for Updated Mark.';
-        }
-
-        if (Object.keys(errors).length > 0) {
-            setValidationErrors(errors);
-            return;
-        }
-
-        const updatedMark = {
-            studentId: parseInt(studentId),
-            examId: parseInt(examId),
-            mark: parseInt(mark),
-        };
-
-        try {
-            await axios.put('http://localhost:5011/api/Mark/UpdateMark', updatedMark);
-            alert('Mark updated successfully');
-            // Clear input fields after successful update
-            setStudentId('');
-            setExamId('');
-            setMark('');
-        } catch (error) {
-            console.error('Error updating mark:', error.message);
-            alert('Failed to update mark. Please try again.');
-        }
-    };
-
-    return (
-        <div className="container mt-5">
-            <h2>Update Mark</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className="form-label">Exam ID:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.examId && 'is-invalid'}`}
-                        value={examId}
-                        onChange={(e) => setExamId(e.target.value)}
-                    />
-                    {validationErrors.examId && <div className="invalid-feedback">{validationErrors.examId}</div>}
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Student ID:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.studentId && 'is-invalid'}`}
-                        value={studentId}
-                        onChange={(e) => setStudentId(e.target.value)}
-                    />
-                    {validationErrors.studentId && <div className="invalid-feedback">{validationErrors.studentId}</div>}
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Updated Mark:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.mark && 'is-invalid'}`}
-                        value={mark}
-                        onChange={(e) => setMark(e.target.value)}
-                    />
-                    {validationErrors.mark && <div className="invalid-feedback">{validationErrors.mark}</div>}
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="container mt-5">
+      <h2>Update Marks</h2>
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      <table className="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Exam Name</th>
+            <th>Mark</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {marks.map((mark) => (
+            <tr key={mark.markId}>
+              <td>{mark.studentName}</td>
+              <td>{mark.examName}</td>
+              <td>
+                {editingMarkId === mark.markId ? (
+                  <input
+                    type="number"
+                    value={mark.mark}
+                    onChange={(e) => setMarks(marks.map(m => m.markId === mark.markId ? {...m, mark: e.target.value} : m))}
+                  />
+                ) : (
+                  mark.mark
+                )}
+              </td>
+              <td>
+                {editingMarkId === mark.markId ? (
+                  <>
+                    <button onClick={() => handleSave(mark.markId, mark.mark)}className="btn btn-success">Save</button>
+                    <button onClick={handleCancel}className="btn btn-secondary">Cancel</button>
+                  </>
+                ) : (
+                  <button onClick={() => handleEdit(mark.markId)} className="btn btn-primary">Edit</button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default UpdateMarks;
+

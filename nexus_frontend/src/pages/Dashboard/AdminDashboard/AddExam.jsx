@@ -9,7 +9,8 @@ const AddExam = () => {
   const [maxMark, setMaxMark] = useState('');
   const [examId, setExamId] = useState('');
   const [examName, setExamName] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const classes = [
     { classId: 101, standard: '1', section: 'A' },
     { classId: 102, standard: '1', section: 'B' },
@@ -52,20 +53,29 @@ const AddExam = () => {
 
     // Validate if all fields are filled
     if (!examId || !examName || !standard || !section || !subject || !date || !maxMark) {
-      alert('Please fill in all fields.');
+      setErrorMessage('Please fill in all fields.');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
       return;
     }
 
     // Validate if exam ID and max mark are numbers
     if (isNaN(examId) || isNaN(maxMark)) {
-      alert('Please enter valid numbers for Exam ID and Max Mark.');
+      setErrorMessage('Please enter valid numbers for Exam ID and Max Mark.');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
       return;
     }
 
     // Validate if the selected date is in the future
     const currentDate = new Date().toISOString().split('T')[0];
     if (date < currentDate) {
-      alert('Please select a future date.');
+      setErrorMessage('Please select a future date.');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
       return;
     }
 
@@ -80,15 +90,20 @@ const AddExam = () => {
 
     try {
       await addExam(examData);
-      alert('Exam added successfully');
+      setSuccessMessage('Exam added successfully');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
     } catch (error) {
       console.error('Error adding exam:', error.message);
-      alert('Failed to add exam. Please try again.');
+      setErrorMessage('Failed to add exam. Please try again.');
     }
   };
 
   return (
     <div className="container mt-5">
+        {successMessage && <div className="alert alert-success">{successMessage}</div>}
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <h2>Add Exam</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

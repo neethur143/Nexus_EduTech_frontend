@@ -102,6 +102,9 @@ const StudentDetails = () => {
         email: ''
       });
       setMessage('Student details updated successfully!');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
     } catch (error) {
       console.error('Error updating student:', error);
       setMessage('Failed to update student details!');
@@ -115,6 +118,9 @@ const StudentDetails = () => {
         const updatedStudents = students.filter(student => student.studentId !== studentId);
         setStudents(updatedStudents);
         setMessage('Student deleted successfully!');
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
       } catch (error) {
         console.error('Error deleting student:', error);
         setMessage('Failed to delete student!');

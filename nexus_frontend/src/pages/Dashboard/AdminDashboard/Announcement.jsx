@@ -1,150 +1,148 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const Communication = () => {
-  const [announcementContent, setAnnouncementContent] = useState('');
-  const [recipientType, setRecipientType] = useState(0); // Default to 'all' recipients
-  const [recipients, setRecipients] = useState([]);
-  const [allStudents, setAllStudents] = useState([]);
-  const [studentId, setStudentId] = useState('');
-  const [selectedStudent, setSelectedStudent] = useState(null);
-  const [customRecipientEmail, setCustomRecipientEmail] = useState('');
-  const [showPopover, setShowPopover] = useState(false);
-  const [popoverMessage, setPopoverMessage] = useState('');
+ 
+// import React, { useRef } from 'react';
+// import emailjs from '@emailjs/browser';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+ 
+// const EmailForm = () => {
+//   const form = useRef();
+ 
+//   const sendEmail = (e) => {
+//     e.preventDefault();
+ 
+//     emailjs
+//       .sendForm('service_ofrktg5', 'template_9lzti9b', form.current, {
+//         publicKey: 'j5GB2pyEB82HIbWcw',
+//       })
+//       .then(
+//         () => {
+//           alert('Successfully Send !!');
+//         },
+//         (error) => {
+//           alert('FAILED...', error.text);
+//         },
+//       );
+//   };
+ 
+//   return (
+//     <form ref={form} onSubmit={sendEmail} className="container">
+//       <div className="row">
+//         <div className="col text-center mb-5">
+//           <h2>Announcement</h2>
+//         </div>
+//       </div>
+     
+//       <div className="row">
+//         <div className="col">
+//           <div className="form-group">
+//             <label htmlFor="user_email">Email</label>
+//             <input type="email" className="form-control" id="user_email" name="user_email" />
+//           </div>
+//         </div>
+//       </div>
+//       <div className="row">
+//         <div className="col">
+//           <div className="form-group">
+//             <label >CC </label>
+//             <input  className="form-control"  name="CC_email" />
+//           </div>
+//         </div>
+//       </div>
+     
+//       <div className="row">
+//         <div className="col">
+//           <div className="form-group">
+//             <label htmlFor="message">Message</label>
+//             <textarea className="form-control" id="message" name="message" rows="3"></textarea>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="row">
+//         <div className="col">
+//           <button type="submit" className="btn btn-primary btn-block">Send</button>
+//         </div>
+//       </div>
+//     </form>
+//   );
+// };
+ 
+// export default EmailForm;
 
-  useEffect(() => {
-    // Fetch all students when component mounts
-    fetchAllStudents();
-  }, []);
-
-  const fetchAllStudents = async () => {
-    try {
-      const response = await axios.get('/api/Student/GetAll');
-      setAllStudents(response.data);
-    } catch (error) {
-      console.error('Error fetching students:', error);
-    }
-  };
-
-  const handleRecipientTypeChange = (e) => {
-    setRecipientType(parseInt(e.target.value));
-  };
-
-  const handleAnnouncementContentChange = (e) => {
-    setAnnouncementContent(e.target.value);
-  };
-
-  const handleStudentIdChange = (e) => {
-    setStudentId(e.target.value);
-    setSelectedStudent(null); // Reset selected student
-  };
-
-  const handleFetchStudentDetails = async () => {
-    try {
-      const response = await axios.get(`/api/Student/GetAll/${studentId}`);
-      setSelectedStudent(response.data);
-    } catch (error) {
-      console.error('Error fetching student details:', error);
-    }
-  };
-
-  const handleCustomRecipientEmailChange = (e) => {
-    setCustomRecipientEmail(e.target.value);
-  };
-
-  const handleRecipientChange = (e) => {
-    const selectedRecipients = Array.from(e.target.selectedOptions, option => option.value);
-    setRecipients(selectedRecipients);
-  };
-
-  const handleSubmit = async (e) => {
+import React, { useRef,useState} from 'react';
+import emailjs from '@emailjs/browser';
+import 'bootstrap/dist/css/bootstrap.min.css';
+ 
+const EmailForm = () => {
+  const form = useRef();
+  const [successMessage, setSuccessMessage] = useState('');
+  const sendEmail = (e) => {
     e.preventDefault();
-
-    let selectedRecipients = [];
-
-    if (recipientType === 0) {
-      // Include all recipients
-      selectedRecipients = recipients;
-    } else if (recipientType === 1) {
-      // Fetch teachers and set them as recipients
-      const response = await axios.get('/api/Teacher/GetAll');
-      selectedRecipients = response.data.map(teacher => teacher.email);
-    } else if (recipientType === 2) {
-      // Include custom recipient email entered by the user
-      selectedRecipients = [customRecipientEmail];
-    }
-
-    try {
-      await axios.post('http://localhost:5011/api/Announcement/send', {
-        announcementContent,
-        recipientType,
-        studentEmail: recipientType === 2 ? customRecipientEmail : null,
-        recipients: selectedRecipients,
-    
-      });
-
-      setPopoverMessage('Announcement sent successfully');
-      setShowPopover(true);
-      setTimeout(() => {
-        setShowPopover(false);
-      }, 3000); // Hide popover after 3 seconds
-    } catch (error) {
-      setPopoverMessage('Error sending announcement');
-      setShowPopover(true);
-    }
+ 
+    emailjs
+      .sendForm('service_ofrktg5', 'template_9lzti9b', form.current, {
+        publicKey: 'j5GB2pyEB82HIbWcw',
+      })
+      .then(
+        () => {
+          setSuccessMessage('Successfully Send !!');
+          setTimeout(() => {
+            setMessage('');
+          }, 2000);
+        },
+        (error) => {
+          setSuccessMessage('FAILED...', error.text);
+          setTimeout(() => {
+            setMessage('');
+          }, 2000);
+        },
+      );
   };
-
+ 
   return (
-    <div className="container mt-5">
-      <h2>Communication</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="announcementContent" className="form-label">Announcement Content:</label>
-          <textarea
-            id="announcementContent"
-            className="form-control"
-            value={announcementContent}
-            onChange={handleAnnouncementContentChange}
-            required
-          />
+    <form ref={form} onSubmit={sendEmail} className="container">
+      <div className="row">
+        <div className="col text-center mb-5">
+          <h2>Announcement</h2>
         </div>
-        <div className="mb-3">
-          <label htmlFor="recipientType" className="form-label">Recipient Type:</label>
-          <select
-            id="recipientType"
-            className="form-select"
-            value={recipientType}
-            onChange={handleRecipientTypeChange}
-          >
-            <option value={0}>All Students and Teachers</option>
-            <option value={1}>All Teachers Only</option>
-            <option value={2}>Select Student</option>
-          </select>
+      </div>
+     
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+            <label htmlFor="user_email">Email</label>
+            <input type="email" className="form-control" id="user_email" name="user_email" />
+          </div>
         </div>
-        {recipientType === 2 && (
-          <div className="mb-3">
-            <label htmlFor="customRecipientEmail" className="form-label">Enter Recipient Email:</label>
-            <input
-              type="email"
-              id="customRecipientEmail"
-              className="form-control"
-              value={customRecipientEmail}
-              onChange={handleCustomRecipientEmailChange}
-              required
-            />
+      </div>
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+            <label >CC </label>
+            <input  className="form-control"  name="CC_email" />
           </div>
-        )}
-        <button type="submit" className="btn btn-primary">Send Announcement</button>
-      </form>
-      {showPopover && (
-        <div className="popover">
-          <div className="popover-content">
-            {popoverMessage}
+        </div>
+      </div>
+     
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+            <label htmlFor="message">Message</label>
+            <textarea className="form-control" id="message" name="message" rows="3"></textarea>
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <button type="submit" className="btn btn-primary btn-block">Send</button>
+        </div>
+      </div>
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
         </div>
       )}
-    </div>
+    </form>
   );
 };
-
-export default Communication;
+ 
+export default EmailForm;

@@ -45,6 +45,9 @@ const AddAttendanceTeacher = () => {
       }
 
       setMessage('Attendance submitted successfully');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
       // Reset the attendance state after submission
       setAttendance([]);
     } catch (error) {

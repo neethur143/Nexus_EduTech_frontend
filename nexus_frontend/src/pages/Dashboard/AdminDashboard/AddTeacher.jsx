@@ -96,6 +96,9 @@ const AddTeacher = () => {
 
       if (response.status === 200) {
         setSuccessMessage('Teacher Added Successfully');
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
         // Reset form fields after successful submission
         setTeacherDetails({
           teacherId: '',

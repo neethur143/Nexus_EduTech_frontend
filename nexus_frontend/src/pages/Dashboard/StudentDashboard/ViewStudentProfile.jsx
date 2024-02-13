@@ -22,7 +22,9 @@ const ViewStudentDetail = () => {
 
         fetchStudentData();
     }, [loggedInStudentId]); // Only re-run the effect if loggedInStudentId changes
-
+    function formatDate(date) {
+        return new Intl.DateTimeFormat('en-GB').format(new Date(date));
+      }
     return (
         <Container className="my-5">
             <h2 className="mb-4 text-center">Student Details</h2>
@@ -65,7 +67,7 @@ const ViewStudentDetail = () => {
                             <Col>
                                 <Form.Group controlId="dob">
                                     <Form.Label>DOB</Form.Label>
-                                    <Form.Control type="text" value={student && student.dob} readOnly />
+                                    <Form.Control type="text" value={formatDate(student && student.dob)} readOnly />
                                 </Form.Group>
                             </Col>
                             <Col>
