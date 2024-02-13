@@ -57,9 +57,9 @@ const TeacherSidebar = () => {
                     </Link>
                 </li>            
             </ul>
-            <div className="toggle-sidebar" onClick={toggleSidebar} style={{ marginTop: '20px' }}>
+            {/* <div className="toggle-sidebar" onClick={toggleSidebar} style={{ marginTop: '20px' }}>
                 <i className={`fas fa-angle-double-${isSidebarOpen ? 'left' : 'right'}`}></i>
-            </div>
+            </div> */}
         </div>
     );
 };

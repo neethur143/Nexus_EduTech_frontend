@@ -107,7 +107,7 @@ function SignIn() {
         .catch((err) => {
           console.error("Error:", err);
           setInvalidCredentials(true);
-          window.alert("Invalid username or password.");
+        
         });
     }
   };
@@ -149,23 +149,27 @@ function SignIn() {
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="password" className="form-label">Password</label>
-                  <input
-                    type="password"
-                    className={`form-control ${errors.password && 'is-invalid'}`}
-                    id="password"
-                    value={user.password}
-                    onChange={(e) =>
-                      setUser((prevstate) => ({
-                        ...prevstate,
-                        password: e.target.value,
-                      }))
-                    }
-                  />
-                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-                  {invalidCredentials && <div className="invalid-feedback">Invalid username or password.</div>}
-                </div>
+  <label htmlFor="password" className="form-label">Password</label>
+  <input
+    type="password"
+    className={`form-control ${errors.password && 'is-invalid'}`}
+    id="password"
+    value={user.password}
+    onChange={(e) =>
+      setUser((prevstate) => ({
+        ...prevstate,
+        password: e.target.value,
+      }))
+    }
+  />
+  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+</div>
 
+{invalidCredentials && (
+  <div className="alert alert-danger mt-2" role="alert">
+    Invalid username or password.
+  </div>
+)}
                 <button className='btn btn-dark btn-lg mb-3' type='submit'>Login</button>
               </form>
 

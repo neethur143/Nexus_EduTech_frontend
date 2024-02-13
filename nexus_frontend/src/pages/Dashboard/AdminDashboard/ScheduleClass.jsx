@@ -6,8 +6,12 @@ const ScheduleClass = () => {
     const dummyData = [
         { standard: '1', section: 'A', classId: 101 },
         { standard: '1', section: 'B', classId: 102 },
+        { standard: '1', section: 'C', classId: 103 },
+        { standard: '1', section: 'D', classId: 104 },
         { standard: '2', section: 'A', classId: 201 },
         { standard: '2', section: 'B', classId: 202 },
+        { standard: '2', section: 'C', classId: 203 },
+        { standard: '2', section: 'D', classId: 204 },
         // ... other standards and sections
     ];
 

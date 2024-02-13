@@ -58,7 +58,7 @@ function Navbar() {
               Profile
                 </a>
                 <ul
-                  className={`dropdown-menu bg-black dropdown-menu-end ${
+                  className={`dropdown-menu bg-white dropdown-menu-end ${
                     dropdownOpen ? 'show' : ''
                   }`}
                   aria-labelledby="userDropdown"
@@ -71,7 +71,7 @@ function Navbar() {
                   </li> */}
                   <li>
                   
-                    <a href="#" className="dropdown-item text-white"><i  /><span><Link to="/" className="menu-item">Logout</Link></span></a>
+                    <a href="#" className="dropdown-item text-black"><i  /><span><Link to="/" className="menu-item">Logout</Link></span></a>
                   </li>
                 </ul>
               </li>
