@@ -11,7 +11,7 @@ const ViewAttendance = () => {
         const fetchAttendance = async () => {
             if (!loggedInStudentId) return; // Exit early if loggedInStudentId is not available
             try {
-              const response = await axios.get(`http://localhost:5011/api/StudentAttendence/GetStudAttendenceById/${loggedInStudentId}`);
+              const response = await axios.get(`http://localhost:5011/api/StudentAttendence/ GetStudAttendenceById/${loggedInStudentId}`);
               setAttendanceData(response.data);
             } catch (error) {
               console.error('Error fetching student attendance:', error);
